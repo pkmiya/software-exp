@@ -1,0 +1,30 @@
+                         4 .list
+                         5 .section .text
+                         6 start:
+000400 7000              7     moveq #0, %d0           /* ans */
+000402 7201              8     moveq #1, %d1           /* i_start */
+000404 7405              9     moveq #5, %d2           /* i_end */
+000406 7601             10     moveq #1, %d3           /* i */
+                        11 
+                        12 outer_loop:
+000408 2803             13     move.l %d3, %d4         /* d4 := j (const) */
+00040a 2A03             14     move.l %d3, %d5         /* d5 := j (var) */
+00040c 7C01             15     move.l #1, %d6          /* d6 := j^j */
+                        16 
+                        17 inner_loop:
+00040e CDC4             18     muls %d4, %d6           /* d6 *= d4 */
+000410 5345             19     subq #1, %d5            /* j_var -- */
+000412 6600 FFFA        20     bne inner_loop          /* inner continue? */
+                        21 
+000416 D086             22     add.l %d6, %d0          /* ans += j^j*/
+000418 5243             23     addq #1, %d3            /* i++ */
+                        24 
+                        25     /* loop end? */
+00041a B642             26     cmp %d2, %d3            /* i > i_end ? */
+00041c 6E00 0006        27     bgt end_of_program      /* true, then EOF */
+000420 6000 FFE6        28     bra outer_loop          /* false, then outer continue */
+                        29 
+                        30 end_of_program:
+000424 4E72 2700        31     stop #0x2700
+                        32 
+                        33 .end

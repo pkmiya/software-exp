@@ -1,0 +1,8 @@
+1. Download soft-jikken.tgz from Moodle and place it in your home directory (~/).
+2. Extract the soft-jikken files:
+   ```
+   $ cd ~
+   $ tar zxvf soft-jikken.tgz
+   ```
+
+3. Overwrite the 'Makefile' with the provided one on Moodle. The original Makefile should exist at ~/mtk/Makefile.

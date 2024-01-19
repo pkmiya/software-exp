@@ -1,0 +1,210 @@
+                         4 .list
+                         5 *******************************
+                         6 ** 複数キューの実装
+                         7 *******************************
+                         8 
+                         9 * INSTRUCTION
+                        10 * 1. SELECT QUEUE AND ITS MODE
+                        11 *     Set values of d0 and d1 in your debugger
+                        12 *     d0: select mode  (0: Wait for input, 1:Enque, 2:Deque, 3:Stop)
+                        13 *     d1: select queue (0:Que0, 1:Que1, 2:Que2, 3:Que3)
+                        14 * 2. SET BREAK POINT
+                        15 *     In line 37, set break point in your code editor
+                        16 *     The target process is in the first line of Que_Select subroutine
+                        17 * 3. RUN PROGRAM
+                        18 *     You'll see the result in DATA_SET in Memory Viewer
+                        19 
+                        20 .section .text
+                        21 
+                        22 Start:
+                        23     /* head address of each queue */
+                        24     .equ Que0, 0x00000600
+                        25     .equ Que1, Que0 + 0x0000010c
+                        26     .equ Que2, Que1 + 0x0000010c
+                        27     .equ Que3, Que2 + 0x0000010c
+                        28 
+                        29     /* flag: offset of each queue */
+                        30     .equ PUT_PTR,  0
+                        31     .equ GET_PTR,  4
+                        32     .equ PUT_FLG,  8
+                        33     .equ GET_FLG,  9
+                        34     .equ INIT_FLG, 10
+                        35     .equ BF_START, 11
+                        36     .equ BF_END,   267
+                        37 
+000400 4EBA 00C8        38     jsr Init_Q
+                        39 
+                        40 Que_Select:
+000404 0C41 0000        41     cmp.w   #0, %d1     /* SET BREAK POINT HERE */
+000408 6700 001E        42     beq     Q0_init
+00040c 0C41 0001        43     cmp.w   #1, %d1
+000410 6700 002E        44     beq     Q1_init
+000414 0C41 0002        45     cmp.w   #2, %d1
+000418 6700 003E        46     beq     Q2_init
+00041c 0C41 0003        47     cmp.w   #3, %d1
+000420 6700 004E        48     beq     Q3_init
+000424 6000 FFDE        49     bra     Que_Select
+                        50 
+                        51 Q0_init:
+000428 227C 0000        52     movea.l #Que0, %a1
+       0600             52 
+00042e 0C29 0000        53     cmp.b   #0x00, INIT_FLG(%a1)
+       000A             53 
+000434 6600 004E        54     bne     Next
+000438 4EBA 0090        55     jsr     Init_Q
+00043c 6000 0046        56     bra     Next
+                        57 
+                        58 Q1_init:
+000440 227C 0000        59     movea.l #Que1, %a1
+       070C             59 
+000446 0C29 0000        60     cmp.b   #0x00, INIT_FLG(%a1)
+       000A             60 
+00044c 6600 0036        61     bne     Next
+000450 4EBA 0078        62     jsr     Init_Q
+000454 6000 002E        63     bra     Next
+                        64 
+                        65 Q2_init:
+000458 227C 0000        66     movea.l #Que2, %a1
+       0818             66 
+00045e 0C29 0000        67     cmp.b   #0x00, INIT_FLG(%a1)
+       000A             67 
+000464 6600 001E        68     bne     Next
+000468 4EBA 0060        69     jsr     Init_Q
+00046c 6000 0016        70     bra     Next
+                        71 
+                        72 Q3_init:
+000470 227C 0000        73     movea.l #Que3, %a1
+       0924             73 
+000476 0C29 0000        74     cmp.b   #0x00, INIT_FLG(%a1)
+       000A             74 
+00047c 6600 0006        75     bne     Next
+000480 4EBA 0048        76     jsr     Init_Q
+                        77 
+                        78 Next:
+000484 6000 0002        79     bra Select
+                        80 
+                        81 
+                        82 /* Mode select loop */
+                        83 Select:
+000488 0C40 0001        84     cmp.w   #1, %d0
+00048c 6700 0016        85     beq     Enque
+000490 0C40 0002        86     cmp.w   #2, %d0
+000494 6700 0020        87     beq     Deque
+000498 0C40 0003        88     cmp.w   #3, %d0
+00049c 6700 0028        89     beq     End_program
+0004a0 6000 FFE6        90     bra     Select
+                        91 
+                        92 Enque:
+0004a4 41F9 0000        93     lea.l   DATA, %a0
+       0000             93 
+0004aa D1C1             94     adda.l  %d1, %a0
+0004ac 4EBA 003E        95     jsr     QueueIn
+0004b0 7000             96     move.l  #0, %d0
+0004b2 6000 FF50        97     bra     Que_Select
+                        98 
+                        99 Deque:
+0004b6 41F9 0000       100     lea.l   DATA_SET, %a0
+       0000            100 
+0004bc 4EBA 003C       101     jsr     QueueOut
+0004c0 7000            102     move.l  #0, %d0
+0004c2 6000 FF40       103     bra     Que_Select
+                       104 
+                       105 End_program:
+0004c6 4E72 2700       106     stop #0x2700
+                       107 
+                       108 Init_Q:
+0004ca 247C 0000       109     move.l  #BF_START, %a2
+       000B            109 
+0004d0 D5C9            110     add.l   %a1, %a2
+0004d2 228A            111     move.l  %a2, PUT_PTR(%a1)       /* init enque pointer */
+0004d4 234A 0004       112     move.l  %a2, GET_PTR(%a1)       /* init deque pointer */
+0004d8 137C 00FF       113     move.b  #0xff, PUT_FLG(%a1)     /* init enque flag */
+       0008            113 
+0004de 137C 0000       114     move.b  #0x00, GET_FLG(%a1)     /* init deque flag */
+       0009            114 
+0004e4 137C 00FF       115     move.b  #0xff, INIT_FLG(%a1)    /* toggle init flag */
+       000A            115 
+0004ea 4E75            116     rts
+                       117 
+                       118 QueueIn:
+0004ec 48E7 C0F0       119     movem.l %a0-%a3/%d0-%d1, -(%sp)
+0004f0 4EBA 0016       120     jsr     PUT_BUF
+0004f4 4CDF 0F03       121     movem.l (%sp)+, %a0-%a3/%d0-%d1
+0004f8 4E75            122     rts
+                       123 
+                       124 QueueOut:
+0004fa 48E7 C0F0       125     movem.l %a0-%a3/%d0-%d1, -(%sp)
+0004fe 4EBA 0046       126     jsr     GET_BUF
+000502 4CDF 0F03       127     movem.l (%sp)+, %a0-%a3/%d0-%d1
+000506 4E75            128     rts
+                       129 
+                       130 
+                       131 /* PUT_BUF, GET_BUF */
+                       132 PUT_BUF:
+000508 1029 0008       133     move.b  PUT_FLG(%a1), %d0
+00050c 2449            134     movea.l %a1, %a2            /* transport tail address */
+00050e 0C00 0000       135     cmp.b   #0x00, %d0
+000512 6700 0030       136     beq     PUT_BUF_Finish
+                       137 
+000516 2651            138     movea.l PUT_PTR(%a1), %a3
+000518 16D0            139     move.b  (%a0), (%a3)+
+00051a D5FC 0000       140     add.l   #BF_END, %a2
+       010B            140 
+000520 B7CA            141     cmpa.l  %a2, %a3            /* check tail address */
+000522 6300 000A       142     bls     PUT_BUF_STEP1
+                       143 
+000526 2649            144     movea.l %a1, %a3            /* transport tail address */
+000528 D7FC 0000       145     add.l   #BF_START, %a3
+       000B            145 
+                       146 
+                       147 PUT_BUF_STEP1:
+00052e 228B            148     move.l  %a3, PUT_PTR(%a1)
+000530 B7E9 0004       149     cmpa.l  GET_PTR(%a1), %a3
+000534 6600 0008       150     bne     PUT_BUF_STEP2
+000538 137C 0000       151     move.b  #0x00, PUT_FLG(%a1)
+       0008            151 
+                       152 
+                       153 PUT_BUF_STEP2:
+00053e 137C 00FF       154     move.b  #0xff, GET_FLG(%a1)
+       0009            154 
+                       155 
+                       156 PUT_BUF_Finish:
+000544 4E75            157     rts
+                       158 
+                       159 GET_BUF:
+000546 1029 0009       160     move.b  GET_FLG(%a1), %d0
+00054a 2449            161     movea.l %a1, %a2            /* transport tail address */
+00054c 0C00 0000       162     cmp.b   #0x00, %d0
+000550 6700 0032       163     beq     GET_BUF_Finish
+                       164 
+000554 2669 0004       165     movea.l GET_PTR(%a1), %a3
+000558 109B            166     move.b  (%a3)+, (%a0)
+00055a D5FC 0000       167     add.l   #BF_END, %a2
+       010B            167 
+000560 B7CA            168     cmpa.l  %a2, %a3            /* check tail address */
+000562 6300 000A       169     bls     GET_BUF_STEP1
+                       170 
+000566 2649            171     movea.l %a1, %a3            /* transport tail address */
+000568 D7FC 0000       172     add.l   #BF_START, %a3
+       000B            172 
+                       173 
+                       174 GET_BUF_STEP1:
+00056e 234B 0004       175     move.l  %a3, GET_PTR(%a1)
+000572 B7D1            176     cmpa.l  PUT_PTR(%a1), %a3
+000574 6600 0008       177     bne     GET_BUF_STEP2
+000578 137C 0000       178     move.b  #0x00, GET_FLG(%a1)
+       0009            178 
+                       179 
+                       180 GET_BUF_STEP2:
+00057e 137C 00FF       181     move.b  #0xff, PUT_FLG(%a1)
+       0008            181 
+                       182 
+                       183 GET_BUF_Finish:
+000584 4E75            184     rts
+                       185 
+                       186 
+                       187 .section  .data
+000588 4142 4344       188 DATA:     .ascii "ABCD"
+00058c 00              189 DATA_SET: .ds.b  1
+                       190 
+                       191 .end

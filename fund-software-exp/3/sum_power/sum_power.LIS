@@ -1,0 +1,25 @@
+                         4 .list
+                         5 .section .text
+                         6 start:
+000400 7205              7     moveq #5, %d1           /* d1 := 5 (arg = counter_end) */
+000402 7000              8     moveq #0, %d0           /* d0 := 1 (res) */
+000404 7401              9     moveq #1, %d2           /* d2 := k (counter_start) */
+                        10 
+                        11 loop:
+                        12     /* calc k^k */
+000406 2602             13     move.l %d2, %d3
+000408 2802             14     move.l %d2, %d4
+00040a C9C3             15     muls %d3, %d4
+00040c 2A04             16     move.l %d4, %d5         /* d5 := k^k */
+00040e D085             17     add.l %d5, %d0
+                        18 
+000410 5242             19     addq #1, %d2
+                        20 
+                        21     /* eof? */
+000412 0C42 0006        22     cmpi #6, %d2            /* d2 > d1? */
+000416 6700 0006        23     beq end_of_program
+00041a 6000 FFEA        24     bra loop
+                        25 
+                        26 end_of_program:
+00041e 4E72 2700        27     stop #0x2700
+                        28 .end

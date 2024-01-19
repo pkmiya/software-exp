@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "mtk_c.h": "c",
+        "stdio.h": "c",
+        "unistd.h": "c",
+        "fcntl.h": "c",
+        "stdlib.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

@@ -1,0 +1,51 @@
+                         4 .list
+                         5 ** ある配列を用いて順列の総和を求める
+                         6 ** min_task.s
+                         7 ** sum[k=1, 12]{P(7,x[k])}
+                         8 ** x = [7, 5, 3, 2, 6, 4, 5, 1, 5, 1, 6, 7]
+                         9 
+                        10 .section .text
+                        11 start:
+000400 43F9 0000        12     lea     x,  %a1         /* a1 := *p (pointer) */
+       0000             12 
+000406 7000             13     moveq   #0, %d0         /* d0 := 0 (init ans)*/
+000408 7207             14     moveq   #n, %d1         /* d1 := n = 7 (const) */
+00040a 740C             15     moveq   #LENGTH, %d2    /* d2 := 12 (i := i_start) */
+                        16 
+                        17 loop:
+00040c 4EBA 0016        18     jsr     p_calc          /*  */
+000410 D083             19     add.l   %d3,%d0         /* ans += perm */
+000412 D2FC 0002        20     adda.w  #2, %a1         /* p++ */
+000416 5342             21     subq    #1, %d2         /* i-- */
+000418 0C42 0000        22     cmp.w   #0, %d2         /* i == 0? */
+00041c 6600 FFEE        23     bne     loop
+                        24 
+                        25 end:
+000420 4E72 2700        26     stop    #0x2700
+                        27 
+                        28 p_calc:
+000424 48E7 E040        29     movem.l %a1/%d0-%d2, -(%a7) /* save registers */
+000428 700C             30     moveq   #LENGTH, %d0    /* d0 := j_start (ex. ans) */
+00042a 7601             31     moveq   #1, %d3         /* d3 := 1 (init perm res) */
+00042c 3411             32     move.w  (%a1), %d2      /* d2 := x[j] (ex. i) */
+                        33                             /* d1 := n = 7 (var. ex. const)*/
+                        34 
+                        35 loop_p:
+00042e C6C1             36     mulu    %d1, %d3        /* perm *= x[j] */
+000430 5341             37     subq    #1,  %d1        /* n-- */
+000432 5342             38     subq    #1,  %d2        /* x[j]-- */
+000434 0C42 0000        39     cmp     #0,  %d2        /* x[j] == 0? */
+000438 6600 FFF4        40     bne     loop_p
+                        41 
+                        42 end_of_p_calc:
+00043c 4CDF 0207        43     movem.l (%a7)+, %a1/%d0-%d2 /* restore registers */
+000440 4E75             44     rts
+                        45 
+                        46 .section .data
+                        47     .equ LENGTH, 12
+                        48     .equ n,      7
+000444 0007 0005        49     x:   dc.w    7, 5, 3, 2, 6, 4, 5, 1, 5, 1, 6, 7
+       0003 0002        49 
+       0006 0004        49 
+       0005 0001        49 
+       0005 0001        49 

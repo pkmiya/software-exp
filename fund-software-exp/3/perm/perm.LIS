@@ -1,0 +1,22 @@
+                         4 .list
+                         5 /* perm.s 順列を求めるプログラム */
+                         6 
+                         7 .section .text
+                         8 start:
+000400 720A              9     moveq #10, %d1          /* d1 := n (1st arg)*/
+000402 7405             10     moveq #5, %d2           /* d2 := r (2nd arg)*/
+000404 7001             11     moveq #1, %d0           /* d0 := 1 (init res) */
+                        12 
+                        13 loop:
+000406 C1C1             14     muls %d1, %d0           /* d0 *= d1 */
+000408 5341             15     subq #1, %d1            /* n -= 1 */
+                        16 
+00040a 0C42 0000        17     cmpi #0, %d2            /* eof? */
+00040e 6700 0008        18     beq end_of_program
+                        19     
+000412 5342             20     subq #1, %d2            /* otherwise, r -= 1 & continue */
+000414 6600 FFF0        21     bne loop
+                        22 
+                        23 end_of_program:
+000418 4E72 2700        24     stop #0x2700
+                        25 .end

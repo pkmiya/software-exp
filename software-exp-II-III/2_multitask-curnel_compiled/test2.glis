@@ -1,0 +1,2635 @@
+68K GAS  /tmp/ccMR7sQT.s 			page 1
+
+
+   1               	#NO_APP
+   2               		.file	"test2.c"
+   3               		.text
+   4               	.Ltext0:
+   5               		.cfi_sections	.debug_frame
+   6               		.section	.rodata.str1.1,"aMS",@progbits,1
+   7               	.LC0:
+   8 0000 5265 6164 		.string	"Ready Queue: "
+   8      7920 5175 
+   8      6575 653A 
+   8      2000 
+   9               	.LC1:
+  10 000e 2564 2000 		.string	"%d "
+  11               		.text
+  12               		.align	2
+  13               		.globl	display_ready_queue
+  14               		.type	display_ready_queue, @function
+  15               	display_ready_queue:
+  16               	.LFB3:
+  17               		.file 1 "test2.c"
+   1:test2.c       **** #include "mtk_c.h"
+   2:test2.c       **** #include <stdio.h>
+   3:test2.c       **** 
+   4:test2.c       **** void display_ready_queue() {
+  18               		.loc 1 4 28 view -0
+  19               		.cfi_startproc
+  20 0000 48E7 2030 		movem.l #8240,-(%sp)
+  21               		.cfi_def_cfa_offset 16
+  22               		.cfi_offset 2, -16
+  23               		.cfi_offset 10, -12
+  24               		.cfi_offset 11, -8
+   5:test2.c       ****     TASK_ID_TYPE temp = ready;
+  25               		.loc 1 5 5 view .LVU1
+  26               		.loc 1 5 18 is_stmt 0 view .LVU2
+  27 0004 2439 0000 		move.l ready,%d2
+  27      0000 
+  28               	.LVL0:
+   6:test2.c       ****     printf("Ready Queue: ");
+  29               		.loc 1 6 5 is_stmt 1 view .LVU3
+  30 000a 4879 0000 		pea .LC0
+  30      0000 
+  31               		.cfi_def_cfa_offset 20
+  32 0010 45F9 0000 		lea printf,%a2
+  32      0000 
+  33 0016 4E92      		jsr (%a2)
+  34               	.LVL1:
+   7:test2.c       ****     while (temp != NULLTASKID) {
+  35               		.loc 1 7 5 view .LVU4
+  36               		.loc 1 7 17 view .LVU5
+  37 0018 588F      		addq.l #4,%sp
+  38               		.cfi_def_cfa_offset 16
+  39 001a 4A82      		tst.l %d2
+  40 001c 6724      		jeq .L2
+  41 001e 47F9 0000 		lea task_tab,%a3
+  41      0000 
+  42               	.L3:
+   8:test2.c       ****         printf("%d ", temp);
+68K GAS  /tmp/ccMR7sQT.s 			page 2
+
+
+  43               		.loc 1 8 9 view .LVU6
+  44 0024 2F02      		move.l %d2,-(%sp)
+  45               		.cfi_def_cfa_offset 20
+  46 0026 4879 0000 		pea .LC1
+  46      0000 
+  47               		.cfi_def_cfa_offset 24
+  48 002c 4E92      		jsr (%a2)
+  49               	.LVL2:
+   9:test2.c       ****         temp = task_tab[temp].next;
+  50               		.loc 1 9 9 view .LVU7
+  51               		.loc 1 9 14 is_stmt 0 view .LVU8
+  52 002e 2002      		move.l %d2,%d0
+  53 0030 D082      		add.l %d2,%d0
+  54 0032 D080      		add.l %d0,%d0
+  55 0034 D082      		add.l %d2,%d0
+  56 0036 D080      		add.l %d0,%d0
+  57 0038 D080      		add.l %d0,%d0
+  58 003a 2433 0810 		move.l 16(%a3,%d0.l),%d2
+  59               	.LVL3:
+   7:test2.c       ****     while (temp != NULLTASKID) {
+  60               		.loc 1 7 17 is_stmt 1 view .LVU9
+  61 003e 508F      		addq.l #8,%sp
+  62               		.cfi_def_cfa_offset 16
+  63 0040 66E2      		jne .L3
+  64               	.L2:
+  10:test2.c       ****     }
+  11:test2.c       ****     printf("\n");
+  65               		.loc 1 11 5 view .LVU10
+  66 0042 4878 000A 		pea 10.w
+  67               		.cfi_def_cfa_offset 20
+  68 0046 4EB9 0000 		jsr putchar
+  68      0000 
+  69               	.LVL4:
+  12:test2.c       **** }
+  70               		.loc 1 12 1 is_stmt 0 view .LVU11
+  71 004c 588F      		addq.l #4,%sp
+  72               		.cfi_def_cfa_offset 16
+  73 004e 4CDF 0C04 		movem.l (%sp)+,#3076
+  74               	.LVL5:
+  75               		.loc 1 12 1 view .LVU12
+  76 0052 4E75      		rts
+  77               		.cfi_endproc
+  78               	.LFE3:
+  79               		.size	display_ready_queue, .-display_ready_queue
+  80               		.section	.rodata.str1.1
+  81               	.LC2:
+  82 0012 5B74 6173 		.string	"[task1]"
+  82      6B31 5D00 
+  83               	.LC3:
+  84 001a 7365 6D61 		.string	"semaphore[0].count = %d\n semaphore[0].task_list = %d\n"
+  84      7068 6F72 
+  84      655B 305D 
+  84      2E63 6F75 
+  84      6E74 203D 
+  85               	.LC4:
+  86 0050 7365 6D61 		.string	"semaphore[1].count = %d\n semaphore[1].task_list = %d\n"
+  86      7068 6F72 
+68K GAS  /tmp/ccMR7sQT.s 			page 3
+
+
+  86      655B 315D 
+  86      2E63 6F75 
+  86      6E74 203D 
+  87               	.LC5:
+  88 0086 7365 6D61 		.string	"semaphore[2].count = %d\n semaphore[2].task_list = %d\n"
+  88      7068 6F72 
+  88      655B 325D 
+  88      2E63 6F75 
+  88      6E74 203D 
+  89               		.text
+  90               		.align	2
+  91               		.globl	task1
+  92               		.type	task1, @function
+  93               	task1:
+  94               	.LFB4:
+  13:test2.c       **** 
+  14:test2.c       **** void task1() {
+  95               		.loc 1 14 14 is_stmt 1 view -0
+  96               		.cfi_startproc
+  97 0054 48E7 383E 		movem.l #14398,-(%sp)
+  98               		.cfi_def_cfa_offset 36
+  99               		.cfi_offset 2, -36
+ 100               		.cfi_offset 3, -32
+ 101               		.cfi_offset 4, -28
+ 102               		.cfi_offset 10, -24
+ 103               		.cfi_offset 11, -20
+ 104               		.cfi_offset 12, -16
+ 105               		.cfi_offset 13, -12
+ 106               		.cfi_offset 14, -8
+  15:test2.c       ****     display_ready_queue();
+ 107               		.loc 1 15 5 view .LVU14
+ 108 0058 4EBA FFA6 		jsr display_ready_queue
+ 109               	.LVL6:
+ 110 005c 263C 0000 		move.l #P,%d3
+ 110      0000 
+ 111 0062 243C 0000 		move.l #puts,%d2
+ 111      0000 
+ 112 0068 45F9 0000 		lea printf,%a2
+ 112      0000 
+ 113 006e 47F9 0000 		lea task_tab,%a3
+ 113      0000 
+ 114 0074 4DF9 0000 		lea putchar,%a6
+ 114      0000 
+ 115 007a 4BF9 0000 		lea semaphore,%a5
+ 115      0000 
+ 116 0080 49F9 0000 		lea V,%a4
+ 116      0000 
+  16:test2.c       ****     while(1) {
+ 117               		.loc 1 16 5 view .LVU15
+  17:test2.c       ****         P(0);
+ 118               		.loc 1 17 9 view .LVU16
+ 119 0086 42A7      		clr.l -(%sp)
+ 120               		.cfi_def_cfa_offset 40
+ 121 0088 2043      		move.l %d3,%a0
+ 122 008a 4E90      		jsr (%a0)
+ 123               	.LVL7:
+  18:test2.c       ****         printf("[task1]\n");
+68K GAS  /tmp/ccMR7sQT.s 			page 4
+
+
+ 124               		.loc 1 18 9 view .LVU17
+ 125 008c 4879 0000 		pea .LC2
+ 125      0000 
+ 126               		.cfi_def_cfa_offset 44
+ 127 0092 2042      		move.l %d2,%a0
+ 128 0094 4E90      		jsr (%a0)
+ 129               	.LVL8:
+  19:test2.c       ****         display_ready_queue();
+ 130               		.loc 1 19 9 view .LVU18
+ 131               	.LBB4:
+ 132               	.LBI4:
+   4:test2.c       ****     printf("Ready Queue: ");
+ 133               		.loc 1 4 6 view .LVU19
+ 134               	.LBB5:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 135               		.loc 1 5 5 view .LVU20
+   5:test2.c       ****     printf("Ready Queue: ");
+ 136               		.loc 1 5 18 is_stmt 0 view .LVU21
+ 137 0096 2839 0000 		move.l ready,%d4
+ 137      0000 
+ 138               	.LVL9:
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 139               		.loc 1 6 5 is_stmt 1 view .LVU22
+ 140 009c 4879 0000 		pea .LC0
+ 140      0000 
+ 141               		.cfi_def_cfa_offset 48
+ 142 00a2 4E92      		jsr (%a2)
+ 143               	.LVL10:
+   7:test2.c       ****         printf("%d ", temp);
+ 144               		.loc 1 7 5 view .LVU23
+   7:test2.c       ****         printf("%d ", temp);
+ 145               		.loc 1 7 17 view .LVU24
+ 146 00a4 4FEF 000C 		lea (12,%sp),%sp
+ 147               		.cfi_def_cfa_offset 36
+ 148 00a8 4A84      		tst.l %d4
+ 149 00aa 671E      		jeq .L11
+ 150               	.L12:
+   8:test2.c       ****         temp = task_tab[temp].next;
+ 151               		.loc 1 8 9 view .LVU25
+ 152 00ac 2F04      		move.l %d4,-(%sp)
+ 153               		.cfi_def_cfa_offset 40
+ 154 00ae 4879 0000 		pea .LC1
+ 154      0000 
+ 155               		.cfi_def_cfa_offset 44
+ 156 00b4 4E92      		jsr (%a2)
+ 157               	.LVL11:
+   9:test2.c       ****     }
+ 158               		.loc 1 9 9 view .LVU26
+   9:test2.c       ****     }
+ 159               		.loc 1 9 14 is_stmt 0 view .LVU27
+ 160 00b6 2004      		move.l %d4,%d0
+ 161 00b8 D084      		add.l %d4,%d0
+ 162 00ba D080      		add.l %d0,%d0
+ 163 00bc D084      		add.l %d4,%d0
+ 164 00be D080      		add.l %d0,%d0
+ 165 00c0 D080      		add.l %d0,%d0
+ 166 00c2 2833 0810 		move.l 16(%a3,%d0.l),%d4
+68K GAS  /tmp/ccMR7sQT.s 			page 5
+
+
+ 167               	.LVL12:
+   7:test2.c       ****         printf("%d ", temp);
+ 168               		.loc 1 7 17 is_stmt 1 view .LVU28
+ 169 00c6 508F      		addq.l #8,%sp
+ 170               		.cfi_def_cfa_offset 36
+ 171 00c8 66E2      		jne .L12
+ 172               	.L11:
+  11:test2.c       **** }
+ 173               		.loc 1 11 5 view .LVU29
+ 174 00ca 4878 000A 		pea 10.w
+ 175               		.cfi_def_cfa_offset 40
+ 176 00ce 4E96      		jsr (%a6)
+ 177               	.LVL13:
+  11:test2.c       **** }
+ 178               		.loc 1 11 5 is_stmt 0 view .LVU30
+ 179               	.LBE5:
+ 180               	.LBE4:
+  20:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 181               		.loc 1 20 9 is_stmt 1 view .LVU31
+ 182 00d0 2F39 0000 		move.l semaphore+4,-(%sp)
+ 182      0000 
+ 183               		.cfi_def_cfa_offset 44
+ 184 00d6 2F15      		move.l (%a5),-(%sp)
+ 185               		.cfi_def_cfa_offset 48
+ 186 00d8 4879 0000 		pea .LC3
+ 186      0000 
+ 187               		.cfi_def_cfa_offset 52
+ 188 00de 4E92      		jsr (%a2)
+ 189               	.LVL14:
+  21:test2.c       ****                 semaphore[0].count, semaphore[0].task_list);
+  22:test2.c       ****         printf("semaphore[1].count = %d\n semaphore[1].task_list = %d\n",
+ 190               		.loc 1 22 9 view .LVU32
+ 191 00e0 2F39 0000 		move.l semaphore+12,-(%sp)
+ 191      0000 
+ 192               		.cfi_def_cfa_offset 56
+ 193 00e6 2F39 0000 		move.l semaphore+8,-(%sp)
+ 193      0000 
+ 194               		.cfi_def_cfa_offset 60
+ 195 00ec 4879 0000 		pea .LC4
+ 195      0000 
+ 196               		.cfi_def_cfa_offset 64
+ 197 00f2 4E92      		jsr (%a2)
+ 198               	.LVL15:
+  23:test2.c       ****                 semaphore[1].count, semaphore[1].task_list);
+  24:test2.c       ****         printf("semaphore[2].count = %d\n semaphore[2].task_list = %d\n",
+ 199               		.loc 1 24 9 view .LVU33
+ 200 00f4 2F39 0000 		move.l semaphore+20,-(%sp)
+ 200      0000 
+ 201               		.cfi_def_cfa_offset 68
+ 202 00fa 2F39 0000 		move.l semaphore+16,-(%sp)
+ 202      0000 
+ 203               		.cfi_def_cfa_offset 72
+ 204 0100 4879 0000 		pea .LC5
+ 204      0000 
+ 205               		.cfi_def_cfa_offset 76
+ 206 0106 4E92      		jsr (%a2)
+ 207               	.LVL16:
+68K GAS  /tmp/ccMR7sQT.s 			page 6
+
+
+  25:test2.c       ****                 semaphore[2].count, semaphore[2].task_list);
+  26:test2.c       ****         V(0);
+ 208               		.loc 1 26 9 view .LVU34
+ 209 0108 4FEF 0024 		lea (36,%sp),%sp
+ 210               		.cfi_def_cfa_offset 40
+ 211 010c 4297      		clr.l (%sp)
+ 212 010e 4E94      		jsr (%a4)
+ 213               	.LVL17:
+  16:test2.c       ****         P(0);
+ 214               		.loc 1 16 10 view .LVU35
+ 215               		.loc 1 26 9 is_stmt 0 view .LVU36
+ 216 0110 588F      		addq.l #4,%sp
+ 217               		.cfi_def_cfa_offset 36
+  16:test2.c       ****         P(0);
+ 218               		.loc 1 16 5 is_stmt 1 view .LVU37
+  17:test2.c       ****         printf("[task1]\n");
+ 219               		.loc 1 17 9 view .LVU38
+ 220 0112 42A7      		clr.l -(%sp)
+ 221               		.cfi_def_cfa_offset 40
+ 222 0114 2043      		move.l %d3,%a0
+ 223 0116 4E90      		jsr (%a0)
+ 224               	.LVL18:
+  18:test2.c       ****         display_ready_queue();
+ 225               		.loc 1 18 9 view .LVU39
+ 226 0118 4879 0000 		pea .LC2
+ 226      0000 
+ 227               		.cfi_def_cfa_offset 44
+ 228 011e 2042      		move.l %d2,%a0
+ 229 0120 4E90      		jsr (%a0)
+ 230               	.LVL19:
+  19:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 231               		.loc 1 19 9 view .LVU40
+ 232               	.LBB7:
+   4:test2.c       ****     TASK_ID_TYPE temp = ready;
+ 233               		.loc 1 4 6 view .LVU41
+ 234               	.LBB6:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 235               		.loc 1 5 5 view .LVU42
+   5:test2.c       ****     printf("Ready Queue: ");
+ 236               		.loc 1 5 18 is_stmt 0 view .LVU43
+ 237 0122 2839 0000 		move.l ready,%d4
+ 237      0000 
+ 238               	.LVL20:
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 239               		.loc 1 6 5 is_stmt 1 view .LVU44
+ 240 0128 4879 0000 		pea .LC0
+ 240      0000 
+ 241               		.cfi_def_cfa_offset 48
+ 242 012e 4E92      		jsr (%a2)
+ 243               	.LVL21:
+   7:test2.c       ****         printf("%d ", temp);
+ 244               		.loc 1 7 5 view .LVU45
+   7:test2.c       ****         printf("%d ", temp);
+ 245               		.loc 1 7 17 view .LVU46
+ 246 0130 4FEF 000C 		lea (12,%sp),%sp
+ 247               		.cfi_def_cfa_offset 36
+ 248 0134 4A84      		tst.l %d4
+68K GAS  /tmp/ccMR7sQT.s 			page 7
+
+
+ 249 0136 6600 FF74 		jne .L12
+ 250 013a 608E      		jra .L11
+ 251               	.LBE6:
+ 252               	.LBE7:
+ 253               		.cfi_endproc
+ 254               	.LFE4:
+ 255               		.size	task1, .-task1
+ 256               		.section	.rodata.str1.1
+ 257               	.LC6:
+ 258 00bc 5B74 6173 		.string	"[task2]"
+ 258      6B32 5D00 
+ 259               		.text
+ 260               		.align	2
+ 261               		.globl	task2
+ 262               		.type	task2, @function
+ 263               	task2:
+ 264               	.LFB5:
+  27:test2.c       ****     }
+  28:test2.c       **** }
+  29:test2.c       **** 
+  30:test2.c       **** void task2() {
+ 265               		.loc 1 30 14 view -0
+ 266               		.cfi_startproc
+ 267 013c 48E7 383E 		movem.l #14398,-(%sp)
+ 268               		.cfi_def_cfa_offset 36
+ 269               		.cfi_offset 2, -36
+ 270               		.cfi_offset 3, -32
+ 271               		.cfi_offset 4, -28
+ 272               		.cfi_offset 10, -24
+ 273               		.cfi_offset 11, -20
+ 274               		.cfi_offset 12, -16
+ 275               		.cfi_offset 13, -12
+ 276               		.cfi_offset 14, -8
+  31:test2.c       ****     display_ready_queue();
+ 277               		.loc 1 31 5 view .LVU48
+ 278 0140 4EBA FEBE 		jsr display_ready_queue
+ 279               	.LVL22:
+ 280 0144 263C 0000 		move.l #P,%d3
+ 280      0000 
+ 281 014a 243C 0000 		move.l #puts,%d2
+ 281      0000 
+ 282 0150 45F9 0000 		lea printf,%a2
+ 282      0000 
+ 283 0156 47F9 0000 		lea task_tab,%a3
+ 283      0000 
+ 284 015c 4DF9 0000 		lea putchar,%a6
+ 284      0000 
+ 285 0162 4BF9 0000 		lea semaphore,%a5
+ 285      0000 
+ 286 0168 49F9 0000 		lea V,%a4
+ 286      0000 
+  32:test2.c       ****     while(1) {
+ 287               		.loc 1 32 5 view .LVU49
+  33:test2.c       ****         P(0);
+ 288               		.loc 1 33 9 view .LVU50
+ 289 016e 42A7      		clr.l -(%sp)
+ 290               		.cfi_def_cfa_offset 40
+68K GAS  /tmp/ccMR7sQT.s 			page 8
+
+
+ 291 0170 2043      		move.l %d3,%a0
+ 292 0172 4E90      		jsr (%a0)
+ 293               	.LVL23:
+  34:test2.c       ****         printf("[task2]\n");
+ 294               		.loc 1 34 9 view .LVU51
+ 295 0174 4879 0000 		pea .LC6
+ 295      0000 
+ 296               		.cfi_def_cfa_offset 44
+ 297 017a 2042      		move.l %d2,%a0
+ 298 017c 4E90      		jsr (%a0)
+ 299               	.LVL24:
+  35:test2.c       ****         display_ready_queue();
+ 300               		.loc 1 35 9 view .LVU52
+ 301               	.LBB10:
+ 302               	.LBI10:
+   4:test2.c       ****     TASK_ID_TYPE temp = ready;
+ 303               		.loc 1 4 6 view .LVU53
+ 304               	.LBB11:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 305               		.loc 1 5 5 view .LVU54
+   5:test2.c       ****     printf("Ready Queue: ");
+ 306               		.loc 1 5 18 is_stmt 0 view .LVU55
+ 307 017e 2839 0000 		move.l ready,%d4
+ 307      0000 
+ 308               	.LVL25:
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 309               		.loc 1 6 5 is_stmt 1 view .LVU56
+ 310 0184 4879 0000 		pea .LC0
+ 310      0000 
+ 311               		.cfi_def_cfa_offset 48
+ 312 018a 4E92      		jsr (%a2)
+ 313               	.LVL26:
+   7:test2.c       ****         printf("%d ", temp);
+ 314               		.loc 1 7 5 view .LVU57
+   7:test2.c       ****         printf("%d ", temp);
+ 315               		.loc 1 7 17 view .LVU58
+ 316 018c 4FEF 000C 		lea (12,%sp),%sp
+ 317               		.cfi_def_cfa_offset 36
+ 318 0190 4A84      		tst.l %d4
+ 319 0192 671E      		jeq .L21
+ 320               	.L22:
+   8:test2.c       ****         temp = task_tab[temp].next;
+ 321               		.loc 1 8 9 view .LVU59
+ 322 0194 2F04      		move.l %d4,-(%sp)
+ 323               		.cfi_def_cfa_offset 40
+ 324 0196 4879 0000 		pea .LC1
+ 324      0000 
+ 325               		.cfi_def_cfa_offset 44
+ 326 019c 4E92      		jsr (%a2)
+ 327               	.LVL27:
+   9:test2.c       ****     }
+ 328               		.loc 1 9 9 view .LVU60
+   9:test2.c       ****     }
+ 329               		.loc 1 9 14 is_stmt 0 view .LVU61
+ 330 019e 2004      		move.l %d4,%d0
+ 331 01a0 D084      		add.l %d4,%d0
+ 332 01a2 D080      		add.l %d0,%d0
+68K GAS  /tmp/ccMR7sQT.s 			page 9
+
+
+ 333 01a4 D084      		add.l %d4,%d0
+ 334 01a6 D080      		add.l %d0,%d0
+ 335 01a8 D080      		add.l %d0,%d0
+ 336 01aa 2833 0810 		move.l 16(%a3,%d0.l),%d4
+ 337               	.LVL28:
+   7:test2.c       ****         printf("%d ", temp);
+ 338               		.loc 1 7 17 is_stmt 1 view .LVU62
+ 339 01ae 508F      		addq.l #8,%sp
+ 340               		.cfi_def_cfa_offset 36
+ 341 01b0 66E2      		jne .L22
+ 342               	.L21:
+  11:test2.c       **** }
+ 343               		.loc 1 11 5 view .LVU63
+ 344 01b2 4878 000A 		pea 10.w
+ 345               		.cfi_def_cfa_offset 40
+ 346 01b6 4E96      		jsr (%a6)
+ 347               	.LVL29:
+  11:test2.c       **** }
+ 348               		.loc 1 11 5 is_stmt 0 view .LVU64
+ 349               	.LBE11:
+ 350               	.LBE10:
+  36:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 351               		.loc 1 36 9 is_stmt 1 view .LVU65
+ 352 01b8 2F39 0000 		move.l semaphore+4,-(%sp)
+ 352      0000 
+ 353               		.cfi_def_cfa_offset 44
+ 354 01be 2F15      		move.l (%a5),-(%sp)
+ 355               		.cfi_def_cfa_offset 48
+ 356 01c0 4879 0000 		pea .LC3
+ 356      0000 
+ 357               		.cfi_def_cfa_offset 52
+ 358 01c6 4E92      		jsr (%a2)
+ 359               	.LVL30:
+  37:test2.c       ****                 semaphore[0].count, semaphore[0].task_list);
+  38:test2.c       ****         printf("semaphore[1].count = %d\n semaphore[1].task_list = %d\n",
+ 360               		.loc 1 38 9 view .LVU66
+ 361 01c8 2F39 0000 		move.l semaphore+12,-(%sp)
+ 361      0000 
+ 362               		.cfi_def_cfa_offset 56
+ 363 01ce 2F39 0000 		move.l semaphore+8,-(%sp)
+ 363      0000 
+ 364               		.cfi_def_cfa_offset 60
+ 365 01d4 4879 0000 		pea .LC4
+ 365      0000 
+ 366               		.cfi_def_cfa_offset 64
+ 367 01da 4E92      		jsr (%a2)
+ 368               	.LVL31:
+  39:test2.c       ****                 semaphore[1].count, semaphore[1].task_list);
+  40:test2.c       ****         printf("semaphore[2].count = %d\n semaphore[2].task_list = %d\n",
+ 369               		.loc 1 40 9 view .LVU67
+ 370 01dc 2F39 0000 		move.l semaphore+20,-(%sp)
+ 370      0000 
+ 371               		.cfi_def_cfa_offset 68
+ 372 01e2 2F39 0000 		move.l semaphore+16,-(%sp)
+ 372      0000 
+ 373               		.cfi_def_cfa_offset 72
+ 374 01e8 4879 0000 		pea .LC5
+68K GAS  /tmp/ccMR7sQT.s 			page 10
+
+
+ 374      0000 
+ 375               		.cfi_def_cfa_offset 76
+ 376 01ee 4E92      		jsr (%a2)
+ 377               	.LVL32:
+  41:test2.c       ****                 semaphore[2].count, semaphore[2].task_list);
+  42:test2.c       ****         V(0);
+ 378               		.loc 1 42 9 view .LVU68
+ 379 01f0 4FEF 0024 		lea (36,%sp),%sp
+ 380               		.cfi_def_cfa_offset 40
+ 381 01f4 4297      		clr.l (%sp)
+ 382 01f6 4E94      		jsr (%a4)
+ 383               	.LVL33:
+  32:test2.c       ****         P(0);
+ 384               		.loc 1 32 10 view .LVU69
+ 385               		.loc 1 42 9 is_stmt 0 view .LVU70
+ 386 01f8 588F      		addq.l #4,%sp
+ 387               		.cfi_def_cfa_offset 36
+  32:test2.c       ****         P(0);
+ 388               		.loc 1 32 5 is_stmt 1 view .LVU71
+  33:test2.c       ****         printf("[task2]\n");
+ 389               		.loc 1 33 9 view .LVU72
+ 390 01fa 42A7      		clr.l -(%sp)
+ 391               		.cfi_def_cfa_offset 40
+ 392 01fc 2043      		move.l %d3,%a0
+ 393 01fe 4E90      		jsr (%a0)
+ 394               	.LVL34:
+  34:test2.c       ****         display_ready_queue();
+ 395               		.loc 1 34 9 view .LVU73
+ 396 0200 4879 0000 		pea .LC6
+ 396      0000 
+ 397               		.cfi_def_cfa_offset 44
+ 398 0206 2042      		move.l %d2,%a0
+ 399 0208 4E90      		jsr (%a0)
+ 400               	.LVL35:
+  35:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 401               		.loc 1 35 9 view .LVU74
+ 402               	.LBB13:
+   4:test2.c       ****     printf("Ready Queue: ");
+ 403               		.loc 1 4 6 view .LVU75
+ 404               	.LBB12:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 405               		.loc 1 5 5 view .LVU76
+   5:test2.c       ****     printf("Ready Queue: ");
+ 406               		.loc 1 5 18 is_stmt 0 view .LVU77
+ 407 020a 2839 0000 		move.l ready,%d4
+ 407      0000 
+ 408               	.LVL36:
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 409               		.loc 1 6 5 is_stmt 1 view .LVU78
+ 410 0210 4879 0000 		pea .LC0
+ 410      0000 
+ 411               		.cfi_def_cfa_offset 48
+ 412 0216 4E92      		jsr (%a2)
+ 413               	.LVL37:
+   7:test2.c       ****         printf("%d ", temp);
+ 414               		.loc 1 7 5 view .LVU79
+   7:test2.c       ****         printf("%d ", temp);
+68K GAS  /tmp/ccMR7sQT.s 			page 11
+
+
+ 415               		.loc 1 7 17 view .LVU80
+ 416 0218 4FEF 000C 		lea (12,%sp),%sp
+ 417               		.cfi_def_cfa_offset 36
+ 418 021c 4A84      		tst.l %d4
+ 419 021e 6600 FF74 		jne .L22
+ 420 0222 608E      		jra .L21
+ 421               	.LBE12:
+ 422               	.LBE13:
+ 423               		.cfi_endproc
+ 424               	.LFE5:
+ 425               		.size	task2, .-task2
+ 426               		.section	.rodata.str1.1
+ 427               	.LC7:
+ 428 00c4 5B74 6173 		.string	"[task3]"
+ 428      6B33 5D00 
+ 429               		.text
+ 430               		.align	2
+ 431               		.globl	task3
+ 432               		.type	task3, @function
+ 433               	task3:
+ 434               	.LFB6:
+  43:test2.c       ****     }
+  44:test2.c       **** }
+  45:test2.c       **** 
+  46:test2.c       **** void task3() {
+ 435               		.loc 1 46 14 view -0
+ 436               		.cfi_startproc
+ 437 0224 48E7 383E 		movem.l #14398,-(%sp)
+ 438               		.cfi_def_cfa_offset 36
+ 439               		.cfi_offset 2, -36
+ 440               		.cfi_offset 3, -32
+ 441               		.cfi_offset 4, -28
+ 442               		.cfi_offset 10, -24
+ 443               		.cfi_offset 11, -20
+ 444               		.cfi_offset 12, -16
+ 445               		.cfi_offset 13, -12
+ 446               		.cfi_offset 14, -8
+  47:test2.c       ****     display_ready_queue();
+ 447               		.loc 1 47 5 view .LVU82
+ 448 0228 4EBA FDD6 		jsr display_ready_queue
+ 449               	.LVL38:
+ 450 022c 263C 0000 		move.l #P,%d3
+ 450      0000 
+ 451 0232 243C 0000 		move.l #puts,%d2
+ 451      0000 
+ 452 0238 45F9 0000 		lea printf,%a2
+ 452      0000 
+ 453 023e 47F9 0000 		lea task_tab,%a3
+ 453      0000 
+ 454 0244 4DF9 0000 		lea putchar,%a6
+ 454      0000 
+ 455 024a 4BF9 0000 		lea semaphore,%a5
+ 455      0000 
+ 456 0250 49F9 0000 		lea V,%a4
+ 456      0000 
+  48:test2.c       ****     while(1) {
+ 457               		.loc 1 48 5 view .LVU83
+68K GAS  /tmp/ccMR7sQT.s 			page 12
+
+
+  49:test2.c       ****         P(1);
+ 458               		.loc 1 49 9 view .LVU84
+ 459 0256 4878 0001 		pea 1.w
+ 460               		.cfi_def_cfa_offset 40
+ 461 025a 2043      		move.l %d3,%a0
+ 462 025c 4E90      		jsr (%a0)
+ 463               	.LVL39:
+  50:test2.c       ****         printf("[task3]\n");
+ 464               		.loc 1 50 9 view .LVU85
+ 465 025e 4879 0000 		pea .LC7
+ 465      0000 
+ 466               		.cfi_def_cfa_offset 44
+ 467 0264 2042      		move.l %d2,%a0
+ 468 0266 4E90      		jsr (%a0)
+ 469               	.LVL40:
+  51:test2.c       ****         display_ready_queue();
+ 470               		.loc 1 51 9 view .LVU86
+ 471               	.LBB16:
+ 472               	.LBI16:
+   4:test2.c       ****     TASK_ID_TYPE temp = ready;
+ 473               		.loc 1 4 6 view .LVU87
+ 474               	.LBB17:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 475               		.loc 1 5 5 view .LVU88
+   5:test2.c       ****     printf("Ready Queue: ");
+ 476               		.loc 1 5 18 is_stmt 0 view .LVU89
+ 477 0268 2839 0000 		move.l ready,%d4
+ 477      0000 
+ 478               	.LVL41:
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 479               		.loc 1 6 5 is_stmt 1 view .LVU90
+ 480 026e 4879 0000 		pea .LC0
+ 480      0000 
+ 481               		.cfi_def_cfa_offset 48
+ 482 0274 4E92      		jsr (%a2)
+ 483               	.LVL42:
+   7:test2.c       ****         printf("%d ", temp);
+ 484               		.loc 1 7 5 view .LVU91
+   7:test2.c       ****         printf("%d ", temp);
+ 485               		.loc 1 7 17 view .LVU92
+ 486 0276 4FEF 000C 		lea (12,%sp),%sp
+ 487               		.cfi_def_cfa_offset 36
+ 488 027a 4A84      		tst.l %d4
+ 489 027c 671E      		jeq .L31
+ 490               	.L32:
+   8:test2.c       ****         temp = task_tab[temp].next;
+ 491               		.loc 1 8 9 view .LVU93
+ 492 027e 2F04      		move.l %d4,-(%sp)
+ 493               		.cfi_def_cfa_offset 40
+ 494 0280 4879 0000 		pea .LC1
+ 494      0000 
+ 495               		.cfi_def_cfa_offset 44
+ 496 0286 4E92      		jsr (%a2)
+ 497               	.LVL43:
+   9:test2.c       ****     }
+ 498               		.loc 1 9 9 view .LVU94
+   9:test2.c       ****     }
+68K GAS  /tmp/ccMR7sQT.s 			page 13
+
+
+ 499               		.loc 1 9 14 is_stmt 0 view .LVU95
+ 500 0288 2004      		move.l %d4,%d0
+ 501 028a D084      		add.l %d4,%d0
+ 502 028c D080      		add.l %d0,%d0
+ 503 028e D084      		add.l %d4,%d0
+ 504 0290 D080      		add.l %d0,%d0
+ 505 0292 D080      		add.l %d0,%d0
+ 506 0294 2833 0810 		move.l 16(%a3,%d0.l),%d4
+ 507               	.LVL44:
+   7:test2.c       ****         printf("%d ", temp);
+ 508               		.loc 1 7 17 is_stmt 1 view .LVU96
+ 509 0298 508F      		addq.l #8,%sp
+ 510               		.cfi_def_cfa_offset 36
+ 511 029a 66E2      		jne .L32
+ 512               	.L31:
+  11:test2.c       **** }
+ 513               		.loc 1 11 5 view .LVU97
+ 514 029c 4878 000A 		pea 10.w
+ 515               		.cfi_def_cfa_offset 40
+ 516 02a0 4E96      		jsr (%a6)
+ 517               	.LVL45:
+  11:test2.c       **** }
+ 518               		.loc 1 11 5 is_stmt 0 view .LVU98
+ 519               	.LBE17:
+ 520               	.LBE16:
+  52:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 521               		.loc 1 52 9 is_stmt 1 view .LVU99
+ 522 02a2 2F39 0000 		move.l semaphore+4,-(%sp)
+ 522      0000 
+ 523               		.cfi_def_cfa_offset 44
+ 524 02a8 2F15      		move.l (%a5),-(%sp)
+ 525               		.cfi_def_cfa_offset 48
+ 526 02aa 4879 0000 		pea .LC3
+ 526      0000 
+ 527               		.cfi_def_cfa_offset 52
+ 528 02b0 4E92      		jsr (%a2)
+ 529               	.LVL46:
+  53:test2.c       **** 				semaphore[0].count, semaphore[0].task_list);
+  54:test2.c       ****         printf("semaphore[1].count = %d\n semaphore[1].task_list = %d\n",
+ 530               		.loc 1 54 9 view .LVU100
+ 531 02b2 2F39 0000 		move.l semaphore+12,-(%sp)
+ 531      0000 
+ 532               		.cfi_def_cfa_offset 56
+ 533 02b8 2F39 0000 		move.l semaphore+8,-(%sp)
+ 533      0000 
+ 534               		.cfi_def_cfa_offset 60
+ 535 02be 4879 0000 		pea .LC4
+ 535      0000 
+ 536               		.cfi_def_cfa_offset 64
+ 537 02c4 4E92      		jsr (%a2)
+ 538               	.LVL47:
+  55:test2.c       ****                 semaphore[1].count, semaphore[1].task_list);
+  56:test2.c       ****         printf("semaphore[2].count = %d\n semaphore[2].task_list = %d\n",
+ 539               		.loc 1 56 9 view .LVU101
+ 540 02c6 2F39 0000 		move.l semaphore+20,-(%sp)
+ 540      0000 
+ 541               		.cfi_def_cfa_offset 68
+68K GAS  /tmp/ccMR7sQT.s 			page 14
+
+
+ 542 02cc 2F39 0000 		move.l semaphore+16,-(%sp)
+ 542      0000 
+ 543               		.cfi_def_cfa_offset 72
+ 544 02d2 4879 0000 		pea .LC5
+ 544      0000 
+ 545               		.cfi_def_cfa_offset 76
+ 546 02d8 4E92      		jsr (%a2)
+ 547               	.LVL48:
+  57:test2.c       ****                 semaphore[2].count, semaphore[2].task_list);
+  58:test2.c       ****         V(1);
+ 548               		.loc 1 58 9 view .LVU102
+ 549 02da 4FEF 0028 		lea (40,%sp),%sp
+ 550               		.cfi_def_cfa_offset 36
+ 551 02de 4878 0001 		pea 1.w
+ 552               		.cfi_def_cfa_offset 40
+ 553 02e2 4E94      		jsr (%a4)
+ 554               	.LVL49:
+  48:test2.c       ****         P(1);
+ 555               		.loc 1 48 10 view .LVU103
+ 556               		.loc 1 58 9 is_stmt 0 view .LVU104
+ 557 02e4 588F      		addq.l #4,%sp
+ 558               		.cfi_def_cfa_offset 36
+  48:test2.c       ****         P(1);
+ 559               		.loc 1 48 5 is_stmt 1 view .LVU105
+  49:test2.c       ****         printf("[task3]\n");
+ 560               		.loc 1 49 9 view .LVU106
+ 561 02e6 4878 0001 		pea 1.w
+ 562               		.cfi_def_cfa_offset 40
+ 563 02ea 2043      		move.l %d3,%a0
+ 564 02ec 4E90      		jsr (%a0)
+ 565               	.LVL50:
+  50:test2.c       ****         display_ready_queue();
+ 566               		.loc 1 50 9 view .LVU107
+ 567 02ee 4879 0000 		pea .LC7
+ 567      0000 
+ 568               		.cfi_def_cfa_offset 44
+ 569 02f4 2042      		move.l %d2,%a0
+ 570 02f6 4E90      		jsr (%a0)
+ 571               	.LVL51:
+  51:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 572               		.loc 1 51 9 view .LVU108
+ 573               	.LBB19:
+   4:test2.c       ****     TASK_ID_TYPE temp = ready;
+ 574               		.loc 1 4 6 view .LVU109
+ 575               	.LBB18:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 576               		.loc 1 5 5 view .LVU110
+   5:test2.c       ****     printf("Ready Queue: ");
+ 577               		.loc 1 5 18 is_stmt 0 view .LVU111
+ 578 02f8 2839 0000 		move.l ready,%d4
+ 578      0000 
+ 579               	.LVL52:
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 580               		.loc 1 6 5 is_stmt 1 view .LVU112
+ 581 02fe 4879 0000 		pea .LC0
+ 581      0000 
+ 582               		.cfi_def_cfa_offset 48
+68K GAS  /tmp/ccMR7sQT.s 			page 15
+
+
+ 583 0304 4E92      		jsr (%a2)
+ 584               	.LVL53:
+   7:test2.c       ****         printf("%d ", temp);
+ 585               		.loc 1 7 5 view .LVU113
+   7:test2.c       ****         printf("%d ", temp);
+ 586               		.loc 1 7 17 view .LVU114
+ 587 0306 4FEF 000C 		lea (12,%sp),%sp
+ 588               		.cfi_def_cfa_offset 36
+ 589 030a 4A84      		tst.l %d4
+ 590 030c 6600 FF70 		jne .L32
+ 591 0310 608A      		jra .L31
+ 592               	.LBE18:
+ 593               	.LBE19:
+ 594               		.cfi_endproc
+ 595               	.LFE6:
+ 596               		.size	task3, .-task3
+ 597               		.section	.rodata.str1.1
+ 598               	.LC8:
+ 599 00cc 5B74 6173 		.string	"[task4]"
+ 599      6B34 5D00 
+ 600               		.text
+ 601               		.align	2
+ 602               		.globl	task4
+ 603               		.type	task4, @function
+ 604               	task4:
+ 605               	.LFB7:
+  59:test2.c       ****     }
+  60:test2.c       **** }
+  61:test2.c       **** 
+  62:test2.c       **** void task4() {
+ 606               		.loc 1 62 14 view -0
+ 607               		.cfi_startproc
+ 608 0312 48E7 383E 		movem.l #14398,-(%sp)
+ 609               		.cfi_def_cfa_offset 36
+ 610               		.cfi_offset 2, -36
+ 611               		.cfi_offset 3, -32
+ 612               		.cfi_offset 4, -28
+ 613               		.cfi_offset 10, -24
+ 614               		.cfi_offset 11, -20
+ 615               		.cfi_offset 12, -16
+ 616               		.cfi_offset 13, -12
+ 617               		.cfi_offset 14, -8
+  63:test2.c       ****     display_ready_queue();
+ 618               		.loc 1 63 5 view .LVU116
+ 619 0316 4EBA FCE8 		jsr display_ready_queue
+ 620               	.LVL54:
+ 621 031a 263C 0000 		move.l #P,%d3
+ 621      0000 
+ 622 0320 243C 0000 		move.l #puts,%d2
+ 622      0000 
+ 623 0326 45F9 0000 		lea printf,%a2
+ 623      0000 
+ 624 032c 47F9 0000 		lea task_tab,%a3
+ 624      0000 
+ 625 0332 4DF9 0000 		lea putchar,%a6
+ 625      0000 
+ 626 0338 4BF9 0000 		lea semaphore,%a5
+68K GAS  /tmp/ccMR7sQT.s 			page 16
+
+
+ 626      0000 
+ 627 033e 49F9 0000 		lea V,%a4
+ 627      0000 
+  64:test2.c       ****     while(1) {
+ 628               		.loc 1 64 5 view .LVU117
+  65:test2.c       ****         P(1);
+ 629               		.loc 1 65 9 view .LVU118
+ 630 0344 4878 0001 		pea 1.w
+ 631               		.cfi_def_cfa_offset 40
+ 632 0348 2043      		move.l %d3,%a0
+ 633 034a 4E90      		jsr (%a0)
+ 634               	.LVL55:
+  66:test2.c       ****         printf("[task4]\n");
+ 635               		.loc 1 66 9 view .LVU119
+ 636 034c 4879 0000 		pea .LC8
+ 636      0000 
+ 637               		.cfi_def_cfa_offset 44
+ 638 0352 2042      		move.l %d2,%a0
+ 639 0354 4E90      		jsr (%a0)
+ 640               	.LVL56:
+  67:test2.c       ****         display_ready_queue();
+ 641               		.loc 1 67 9 view .LVU120
+ 642               	.LBB22:
+ 643               	.LBI22:
+   4:test2.c       ****     printf("Ready Queue: ");
+ 644               		.loc 1 4 6 view .LVU121
+ 645               	.LBB23:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 646               		.loc 1 5 5 view .LVU122
+   5:test2.c       ****     printf("Ready Queue: ");
+ 647               		.loc 1 5 18 is_stmt 0 view .LVU123
+ 648 0356 2839 0000 		move.l ready,%d4
+ 648      0000 
+ 649               	.LVL57:
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 650               		.loc 1 6 5 is_stmt 1 view .LVU124
+ 651 035c 4879 0000 		pea .LC0
+ 651      0000 
+ 652               		.cfi_def_cfa_offset 48
+ 653 0362 4E92      		jsr (%a2)
+ 654               	.LVL58:
+   7:test2.c       ****         printf("%d ", temp);
+ 655               		.loc 1 7 5 view .LVU125
+   7:test2.c       ****         printf("%d ", temp);
+ 656               		.loc 1 7 17 view .LVU126
+ 657 0364 4FEF 000C 		lea (12,%sp),%sp
+ 658               		.cfi_def_cfa_offset 36
+ 659 0368 4A84      		tst.l %d4
+ 660 036a 671E      		jeq .L41
+ 661               	.L42:
+   8:test2.c       ****         temp = task_tab[temp].next;
+ 662               		.loc 1 8 9 view .LVU127
+ 663 036c 2F04      		move.l %d4,-(%sp)
+ 664               		.cfi_def_cfa_offset 40
+ 665 036e 4879 0000 		pea .LC1
+ 665      0000 
+ 666               		.cfi_def_cfa_offset 44
+68K GAS  /tmp/ccMR7sQT.s 			page 17
+
+
+ 667 0374 4E92      		jsr (%a2)
+ 668               	.LVL59:
+   9:test2.c       ****     }
+ 669               		.loc 1 9 9 view .LVU128
+   9:test2.c       ****     }
+ 670               		.loc 1 9 14 is_stmt 0 view .LVU129
+ 671 0376 2004      		move.l %d4,%d0
+ 672 0378 D084      		add.l %d4,%d0
+ 673 037a D080      		add.l %d0,%d0
+ 674 037c D084      		add.l %d4,%d0
+ 675 037e D080      		add.l %d0,%d0
+ 676 0380 D080      		add.l %d0,%d0
+ 677 0382 2833 0810 		move.l 16(%a3,%d0.l),%d4
+ 678               	.LVL60:
+   7:test2.c       ****         printf("%d ", temp);
+ 679               		.loc 1 7 17 is_stmt 1 view .LVU130
+ 680 0386 508F      		addq.l #8,%sp
+ 681               		.cfi_def_cfa_offset 36
+ 682 0388 66E2      		jne .L42
+ 683               	.L41:
+  11:test2.c       **** }
+ 684               		.loc 1 11 5 view .LVU131
+ 685 038a 4878 000A 		pea 10.w
+ 686               		.cfi_def_cfa_offset 40
+ 687 038e 4E96      		jsr (%a6)
+ 688               	.LVL61:
+  11:test2.c       **** }
+ 689               		.loc 1 11 5 is_stmt 0 view .LVU132
+ 690               	.LBE23:
+ 691               	.LBE22:
+  68:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 692               		.loc 1 68 9 is_stmt 1 view .LVU133
+ 693 0390 2F39 0000 		move.l semaphore+4,-(%sp)
+ 693      0000 
+ 694               		.cfi_def_cfa_offset 44
+ 695 0396 2F15      		move.l (%a5),-(%sp)
+ 696               		.cfi_def_cfa_offset 48
+ 697 0398 4879 0000 		pea .LC3
+ 697      0000 
+ 698               		.cfi_def_cfa_offset 52
+ 699 039e 4E92      		jsr (%a2)
+ 700               	.LVL62:
+  69:test2.c       **** 				semaphore[0].count, semaphore[0].task_list);
+  70:test2.c       ****         printf("semaphore[1].count = %d\n semaphore[1].task_list = %d\n",
+ 701               		.loc 1 70 9 view .LVU134
+ 702 03a0 2F39 0000 		move.l semaphore+12,-(%sp)
+ 702      0000 
+ 703               		.cfi_def_cfa_offset 56
+ 704 03a6 2F39 0000 		move.l semaphore+8,-(%sp)
+ 704      0000 
+ 705               		.cfi_def_cfa_offset 60
+ 706 03ac 4879 0000 		pea .LC4
+ 706      0000 
+ 707               		.cfi_def_cfa_offset 64
+ 708 03b2 4E92      		jsr (%a2)
+ 709               	.LVL63:
+  71:test2.c       **** 				semaphore[1].count, semaphore[1].task_list);
+68K GAS  /tmp/ccMR7sQT.s 			page 18
+
+
+  72:test2.c       ****         printf("semaphore[2].count = %d\n semaphore[2].task_list = %d\n",
+ 710               		.loc 1 72 9 view .LVU135
+ 711 03b4 2F39 0000 		move.l semaphore+20,-(%sp)
+ 711      0000 
+ 712               		.cfi_def_cfa_offset 68
+ 713 03ba 2F39 0000 		move.l semaphore+16,-(%sp)
+ 713      0000 
+ 714               		.cfi_def_cfa_offset 72
+ 715 03c0 4879 0000 		pea .LC5
+ 715      0000 
+ 716               		.cfi_def_cfa_offset 76
+ 717 03c6 4E92      		jsr (%a2)
+ 718               	.LVL64:
+  73:test2.c       **** 				semaphore[2].count, semaphore[2].task_list);
+  74:test2.c       ****         V(1);
+ 719               		.loc 1 74 9 view .LVU136
+ 720 03c8 4FEF 0028 		lea (40,%sp),%sp
+ 721               		.cfi_def_cfa_offset 36
+ 722 03cc 4878 0001 		pea 1.w
+ 723               		.cfi_def_cfa_offset 40
+ 724 03d0 4E94      		jsr (%a4)
+ 725               	.LVL65:
+  64:test2.c       ****         P(1);
+ 726               		.loc 1 64 10 view .LVU137
+ 727               		.loc 1 74 9 is_stmt 0 view .LVU138
+ 728 03d2 588F      		addq.l #4,%sp
+ 729               		.cfi_def_cfa_offset 36
+  64:test2.c       ****         P(1);
+ 730               		.loc 1 64 5 is_stmt 1 view .LVU139
+  65:test2.c       ****         printf("[task4]\n");
+ 731               		.loc 1 65 9 view .LVU140
+ 732 03d4 4878 0001 		pea 1.w
+ 733               		.cfi_def_cfa_offset 40
+ 734 03d8 2043      		move.l %d3,%a0
+ 735 03da 4E90      		jsr (%a0)
+ 736               	.LVL66:
+  66:test2.c       ****         display_ready_queue();
+ 737               		.loc 1 66 9 view .LVU141
+ 738 03dc 4879 0000 		pea .LC8
+ 738      0000 
+ 739               		.cfi_def_cfa_offset 44
+ 740 03e2 2042      		move.l %d2,%a0
+ 741 03e4 4E90      		jsr (%a0)
+ 742               	.LVL67:
+  67:test2.c       ****         printf("semaphore[0].count = %d\n semaphore[0].task_list = %d\n",
+ 743               		.loc 1 67 9 view .LVU142
+ 744               	.LBB25:
+   4:test2.c       ****     TASK_ID_TYPE temp = ready;
+ 745               		.loc 1 4 6 view .LVU143
+ 746               	.LBB24:
+   5:test2.c       ****     printf("Ready Queue: ");
+ 747               		.loc 1 5 5 view .LVU144
+   5:test2.c       ****     printf("Ready Queue: ");
+ 748               		.loc 1 5 18 is_stmt 0 view .LVU145
+ 749 03e6 2839 0000 		move.l ready,%d4
+ 749      0000 
+ 750               	.LVL68:
+68K GAS  /tmp/ccMR7sQT.s 			page 19
+
+
+   6:test2.c       ****     while (temp != NULLTASKID) {
+ 751               		.loc 1 6 5 is_stmt 1 view .LVU146
+ 752 03ec 4879 0000 		pea .LC0
+ 752      0000 
+ 753               		.cfi_def_cfa_offset 48
+ 754 03f2 4E92      		jsr (%a2)
+ 755               	.LVL69:
+   7:test2.c       ****         printf("%d ", temp);
+ 756               		.loc 1 7 5 view .LVU147
+   7:test2.c       ****         printf("%d ", temp);
+ 757               		.loc 1 7 17 view .LVU148
+ 758 03f4 4FEF 000C 		lea (12,%sp),%sp
+ 759               		.cfi_def_cfa_offset 36
+ 760 03f8 4A84      		tst.l %d4
+ 761 03fa 6600 FF70 		jne .L42
+ 762 03fe 608A      		jra .L41
+ 763               	.LBE24:
+ 764               	.LBE25:
+ 765               		.cfi_endproc
+ 766               	.LFE7:
+ 767               		.size	task4, .-task4
+ 768               		.section	.text.startup,"ax",@progbits
+ 769               		.align	2
+ 770               		.globl	main
+ 771               		.type	main, @function
+ 772               	main:
+ 773               	.LFB8:
+  75:test2.c       ****     }
+  76:test2.c       **** }
+  77:test2.c       **** 
+  78:test2.c       **** void main(void) {
+ 774               		.loc 1 78 17 view -0
+ 775               		.cfi_startproc
+ 776 0000 2F0A      		move.l %a2,-(%sp)
+ 777               		.cfi_def_cfa_offset 8
+ 778               		.cfi_offset 10, -8
+  79:test2.c       ****     // ハードウェア初期化
+  80:test2.c       ****     init_kernel();
+ 779               		.loc 1 80 5 view .LVU150
+ 780 0002 4EB9 0000 		jsr init_kernel
+ 780      0000 
+ 781               	.LVL70:
+  81:test2.c       **** 
+  82:test2.c       ****     // タスクの初期化と登録
+  83:test2.c       ****     set_task(task1);
+ 782               		.loc 1 83 5 view .LVU151
+ 783 0008 4879 0000 		pea task1
+ 783      0000 
+ 784               		.cfi_def_cfa_offset 12
+ 785 000e 45F9 0000 		lea set_task,%a2
+ 785      0000 
+ 786 0014 4E92      		jsr (%a2)
+ 787               	.LVL71:
+  84:test2.c       ****     set_task(task2);
+ 788               		.loc 1 84 5 view .LVU152
+ 789 0016 4879 0000 		pea task2
+ 789      0000 
+68K GAS  /tmp/ccMR7sQT.s 			page 20
+
+
+ 790               		.cfi_def_cfa_offset 16
+ 791 001c 4E92      		jsr (%a2)
+ 792               	.LVL72:
+  85:test2.c       ****     set_task(task3);
+ 793               		.loc 1 85 5 view .LVU153
+ 794 001e 4879 0000 		pea task3
+ 794      0000 
+ 795               		.cfi_def_cfa_offset 20
+ 796 0024 4E92      		jsr (%a2)
+ 797               	.LVL73:
+  86:test2.c       ****     set_task(task4);
+ 798               		.loc 1 86 5 view .LVU154
+ 799 0026 4879 0000 		pea task4
+ 799      0000 
+ 800               		.cfi_def_cfa_offset 24
+ 801 002c 4E92      		jsr (%a2)
+ 802               	.LVL74:
+  87:test2.c       ****     display_ready_queue();
+ 803               		.loc 1 87 5 view .LVU155
+ 804 002e 4EB9 0000 		jsr display_ready_queue
+ 804      0000 
+ 805               	.LVL75:
+  88:test2.c       **** 
+  89:test2.c       ****     // マルチタスク処理の開始
+  90:test2.c       ****     begin_sch();
+ 806               		.loc 1 90 5 view .LVU156
+ 807 0034 4FEF 0010 		lea (16,%sp),%sp
+ 808               		.cfi_def_cfa_offset 8
+  91:test2.c       **** }
+ 809               		.loc 1 91 1 is_stmt 0 view .LVU157
+ 810 0038 245F      		move.l (%sp)+,%a2
+  90:test2.c       **** }
+ 811               		.loc 1 90 5 view .LVU158
+ 812 003a 4EF9 0000 		jra begin_sch
+ 812      0000 
+ 813               	.LVL76:
+ 814               		.cfi_endproc
+ 815               	.LFE8:
+ 816               		.size	main, .-main
+ 817               		.text
+ 818               	.Letext0:
+ 819               		.file 2 "mtk_c.h"
+ 820               		.file 3 "<built-in>"
+ 821               		.file 4 "/usr/local/m68k-elf/include/stdio.h"
+ 822               		.section	.debug_info,"",@progbits
+ 823               	.Ldebug_info0:
+ 824 0000 0000 0545 		.long	0x545
+ 825 0004 0005      		.word	0x5
+ 826 0006 01        		.byte	0x1
+ 827 0007 04        		.byte	0x4
+ 828 0008 0000 0000 		.long	.Ldebug_abbrev0
+ 829 000c 13        		.uleb128 0x13
+ 830 000d 0000 0000 		.long	.LASF37
+ 831 0011 1D        		.byte	0x1d
+ 832 0012 0000 0000 		.long	.LASF38
+ 833 0016 0000 0000 		.long	.LASF39
+ 834 001a 0000 0000 		.long	.LLRL9
+68K GAS  /tmp/ccMR7sQT.s 			page 21
+
+
+ 835 001e 0000 0000 		.long	0
+ 836 0022 0000 0000 		.long	.Ldebug_line0
+ 837 0026 0A        		.uleb128 0xa
+ 838 0027 0000 0000 		.long	.LASF2
+ 839 002b 14        		.byte	0x14
+ 840 002c 0D        		.byte	0xd
+ 841 002d 0000 0031 		.long	0x31
+ 842 0031 14        		.uleb128 0x14
+ 843 0032 04        		.byte	0x4
+ 844 0033 05        		.byte	0x5
+ 845 0034 696E 7400 		.string	"int"
+ 846 0038 0D        		.uleb128 0xd
+ 847 0039 08        		.byte	0x8
+ 848 003a 16        		.byte	0x16
+ 849 003b 0000 0058 		.long	0x58
+ 850 003f 03        		.uleb128 0x3
+ 851 0040 0000 0000 		.long	.LASF0
+ 852 0044 17        		.byte	0x17
+ 853 0045 0F        		.byte	0xf
+ 854 0046 0000 0031 		.long	0x31
+ 855 004a 00        		.byte	0
+ 856 004b 03        		.uleb128 0x3
+ 857 004c 0000 0000 		.long	.LASF1
+ 858 0050 18        		.byte	0x18
+ 859 0051 0F        		.byte	0xf
+ 860 0052 0000 0026 		.long	0x26
+ 861 0056 04        		.byte	0x4
+ 862 0057 00        		.byte	0
+ 863 0058 0A        		.uleb128 0xa
+ 864 0059 0000 0000 		.long	.LASF3
+ 865 005d 19        		.byte	0x19
+ 866 005e 03        		.byte	0x3
+ 867 005f 0000 0038 		.long	0x38
+ 868 0063 0D        		.uleb128 0xd
+ 869 0064 14        		.byte	0x14
+ 870 0065 1B        		.byte	0x1b
+ 871 0066 0000 00A7 		.long	0xa7
+ 872 006a 03        		.uleb128 0x3
+ 873 006b 0000 0000 		.long	.LASF4
+ 874 006f 1C        		.byte	0x1c
+ 875 0070 0E        		.byte	0xe
+ 876 0071 0000 00AE 		.long	0xae
+ 877 0075 00        		.byte	0
+ 878 0076 03        		.uleb128 0x3
+ 879 0077 0000 0000 		.long	.LASF5
+ 880 007b 1D        		.byte	0x1d
+ 881 007c 0D        		.byte	0xd
+ 882 007d 0000 00B3 		.long	0xb3
+ 883 0081 04        		.byte	0x4
+ 884 0082 03        		.uleb128 0x3
+ 885 0083 0000 0000 		.long	.LASF6
+ 886 0087 1E        		.byte	0x1e
+ 887 0088 0F        		.byte	0xf
+ 888 0089 0000 0031 		.long	0x31
+ 889 008d 08        		.byte	0x8
+ 890 008e 03        		.uleb128 0x3
+ 891 008f 0000 0000 		.long	.LASF7
+68K GAS  /tmp/ccMR7sQT.s 			page 22
+
+
+ 892 0093 1F        		.byte	0x1f
+ 893 0094 0F        		.byte	0xf
+ 894 0095 0000 0031 		.long	0x31
+ 895 0099 0C        		.byte	0xc
+ 896 009a 03        		.uleb128 0x3
+ 897 009b 0000 0000 		.long	.LASF8
+ 898 009f 20        		.byte	0x20
+ 899 00a0 0F        		.byte	0xf
+ 900 00a1 0000 0026 		.long	0x26
+ 901 00a5 10        		.byte	0x10
+ 902 00a6 00        		.byte	0
+ 903 00a7 15        		.uleb128 0x15
+ 904 00a8 0000 00AE 		.long	0xae
+ 905 00ac 05        		.uleb128 0x5
+ 906 00ad 00        		.byte	0
+ 907 00ae 0E        		.uleb128 0xe
+ 908 00af 0000 00A7 		.long	0xa7
+ 909 00b3 16        		.uleb128 0x16
+ 910 00b4 04        		.byte	0x4
+ 911 00b5 0A        		.uleb128 0xa
+ 912 00b6 0000 0000 		.long	.LASF9
+ 913 00ba 21        		.byte	0x21
+ 914 00bb 03        		.byte	0x3
+ 915 00bc 0000 0063 		.long	0x63
+ 916 00c0 02        		.uleb128 0x2
+ 917 00c1 04        		.byte	0x4
+ 918 00c2 07        		.byte	0x7
+ 919 00c3 0000 0000 		.long	.LASF10
+ 920 00c7 02        		.uleb128 0x2
+ 921 00c8 01        		.byte	0x1
+ 922 00c9 06        		.byte	0x6
+ 923 00ca 0000 0000 		.long	.LASF11
+ 924 00ce 17        		.uleb128 0x17
+ 925 00cf 0000 00C7 		.long	0xc7
+ 926 00d3 0F        		.uleb128 0xf
+ 927 00d4 0000 0058 		.long	0x58
+ 928 00d8 0000 00E3 		.long	0xe3
+ 929 00dc 10        		.uleb128 0x10
+ 930 00dd 0000 00C0 		.long	0xc0
+ 931 00e1 02        		.byte	0x2
+ 932 00e2 00        		.byte	0
+ 933 00e3 0B        		.uleb128 0xb
+ 934 00e4 0000 0000 		.long	.LASF12
+ 935 00e8 2B        		.byte	0x2b
+ 936 00e9 18        		.byte	0x18
+ 937 00ea 0000 00D3 		.long	0xd3
+ 938 00ee 0F        		.uleb128 0xf
+ 939 00ef 0000 00B5 		.long	0xb5
+ 940 00f3 0000 00FE 		.long	0xfe
+ 941 00f7 10        		.uleb128 0x10
+ 942 00f8 0000 00C0 		.long	0xc0
+ 943 00fc 05        		.byte	0x5
+ 944 00fd 00        		.byte	0
+ 945 00fe 0B        		.uleb128 0xb
+ 946 00ff 0000 0000 		.long	.LASF13
+ 947 0103 2C        		.byte	0x2c
+ 948 0104 16        		.byte	0x16
+68K GAS  /tmp/ccMR7sQT.s 			page 23
+
+
+ 949 0105 0000 00EE 		.long	0xee
+ 950 0109 0B        		.uleb128 0xb
+ 951 010a 0000 0000 		.long	.LASF14
+ 952 010e 32        		.byte	0x32
+ 953 010f 15        		.byte	0x15
+ 954 0110 0000 0026 		.long	0x26
+ 955 0114 02        		.uleb128 0x2
+ 956 0115 01        		.byte	0x1
+ 957 0116 06        		.byte	0x6
+ 958 0117 0000 0000 		.long	.LASF15
+ 959 011b 02        		.uleb128 0x2
+ 960 011c 01        		.byte	0x1
+ 961 011d 08        		.byte	0x8
+ 962 011e 0000 0000 		.long	.LASF16
+ 963 0122 02        		.uleb128 0x2
+ 964 0123 02        		.byte	0x2
+ 965 0124 05        		.byte	0x5
+ 966 0125 0000 0000 		.long	.LASF17
+ 967 0129 02        		.uleb128 0x2
+ 968 012a 02        		.byte	0x2
+ 969 012b 07        		.byte	0x7
+ 970 012c 0000 0000 		.long	.LASF18
+ 971 0130 02        		.uleb128 0x2
+ 972 0131 04        		.byte	0x4
+ 973 0132 05        		.byte	0x5
+ 974 0133 0000 0000 		.long	.LASF19
+ 975 0137 02        		.uleb128 0x2
+ 976 0138 08        		.byte	0x8
+ 977 0139 05        		.byte	0x5
+ 978 013a 0000 0000 		.long	.LASF20
+ 979 013e 02        		.uleb128 0x2
+ 980 013f 08        		.byte	0x8
+ 981 0140 07        		.byte	0x7
+ 982 0141 0000 0000 		.long	.LASF21
+ 983 0145 02        		.uleb128 0x2
+ 984 0146 0C        		.byte	0xc
+ 985 0147 04        		.byte	0x4
+ 986 0148 0000 0000 		.long	.LASF22
+ 987 014c 02        		.uleb128 0x2
+ 988 014d 04        		.byte	0x4
+ 989 014e 07        		.byte	0x7
+ 990 014f 0000 0000 		.long	.LASF23
+ 991 0153 0E        		.uleb128 0xe
+ 992 0154 0000 00CE 		.long	0xce
+ 993 0158 11        		.uleb128 0x11
+ 994 0159 0000 0000 		.long	.LASF24
+ 995 015d 3E        		.byte	0x3e
+ 996 015e 0000 0164 		.long	0x164
+ 997 0162 05        		.uleb128 0x5
+ 998 0163 00        		.byte	0
+ 999 0164 18        		.uleb128 0x18
+ 1000 0165 0000 0000 		.long	.LASF40
+ 1001 0169 02        		.byte	0x2
+ 1002 016a 3C        		.byte	0x3c
+ 1003 016b 06        		.byte	0x6
+ 1004 016c 0000 0176 		.long	0x176
+ 1005 0170 06        		.uleb128 0x6
+68K GAS  /tmp/ccMR7sQT.s 			page 24
+
+
+ 1006 0171 0000 00AE 		.long	0xae
+ 1007 0175 00        		.byte	0
+ 1008 0176 11        		.uleb128 0x11
+ 1009 0177 0000 0000 		.long	.LASF25
+ 1010 017b 3B        		.byte	0x3b
+ 1011 017c 0000 0182 		.long	0x182
+ 1012 0180 05        		.uleb128 0x5
+ 1013 0181 00        		.byte	0
+ 1014 0182 12        		.uleb128 0x12
+ 1015 0183 5600      		.string	"V"
+ 1016 0185 5A        		.byte	0x5a
+ 1017 0186 0000 0031 		.long	0x31
+ 1018 018a 0000 0194 		.long	0x194
+ 1019 018e 06        		.uleb128 0x6
+ 1020 018f 0000 0031 		.long	0x31
+ 1021 0193 00        		.byte	0
+ 1022 0194 12        		.uleb128 0x12
+ 1023 0195 5000      		.string	"P"
+ 1024 0197 59        		.byte	0x59
+ 1025 0198 0000 0031 		.long	0x31
+ 1026 019c 0000 01A6 		.long	0x1a6
+ 1027 01a0 06        		.uleb128 0x6
+ 1028 01a1 0000 0031 		.long	0x31
+ 1029 01a5 00        		.byte	0
+ 1030 01a6 19        		.uleb128 0x19
+ 1031 01a7 0000 0000 		.long	.LASF26
+ 1032 01ab 04        		.byte	0x4
+ 1033 01ac CE        		.byte	0xce
+ 1034 01ad 05        		.byte	0x5
+ 1035 01ae 0000 0031 		.long	0x31
+ 1036 01b2 0000 01BD 		.long	0x1bd
+ 1037 01b6 06        		.uleb128 0x6
+ 1038 01b7 0000 0153 		.long	0x153
+ 1039 01bb 05        		.uleb128 0x5
+ 1040 01bc 00        		.byte	0
+ 1041 01bd 1A        		.uleb128 0x1a
+ 1042 01be 0000 0000 		.long	.LASF41
+ 1043 01c2 01        		.byte	0x1
+ 1044 01c3 4E        		.byte	0x4e
+ 1045 01c4 06        		.byte	0x6
+ 1046 01c5 0000 0000 		.long	.LFB8
+ 1047 01c9 0000 0040 		.long	.LFE8-.LFB8
+ 1048 01cd 01        		.uleb128 0x1
+ 1049 01ce 9C        		.byte	0x9c
+ 1050 01cf 0000 0213 		.long	0x213
+ 1051 01d3 01        		.uleb128 0x1
+ 1052 01d4 0000 0000 		.long	.LVL70
+ 1053 01d8 0000 0176 		.long	0x176
+ 1054 01dc 01        		.uleb128 0x1
+ 1055 01dd 0000 0000 		.long	.LVL71
+ 1056 01e1 0000 0164 		.long	0x164
+ 1057 01e5 01        		.uleb128 0x1
+ 1058 01e6 0000 0000 		.long	.LVL72
+ 1059 01ea 0000 0164 		.long	0x164
+ 1060 01ee 01        		.uleb128 0x1
+ 1061 01ef 0000 0000 		.long	.LVL73
+ 1062 01f3 0000 0164 		.long	0x164
+68K GAS  /tmp/ccMR7sQT.s 			page 25
+
+
+ 1063 01f7 01        		.uleb128 0x1
+ 1064 01f8 0000 0000 		.long	.LVL74
+ 1065 01fc 0000 0164 		.long	0x164
+ 1066 0200 01        		.uleb128 0x1
+ 1067 0201 0000 0000 		.long	.LVL75
+ 1068 0205 0000 04D7 		.long	0x4d7
+ 1069 0209 1B        		.uleb128 0x1b
+ 1070 020a 0000 0000 		.long	.LVL76
+ 1071 020e 0000 0158 		.long	0x158
+ 1072 0212 00        		.byte	0
+ 1073 0213 07        		.uleb128 0x7
+ 1074 0214 0000 0000 		.long	.LASF27
+ 1075 0218 3E        		.byte	0x3e
+ 1076 0219 0000 0000 		.long	.LFB7
+ 1077 021d 0000 00EE 		.long	.LFE7-.LFB7
+ 1078 0221 01        		.uleb128 0x1
+ 1079 0222 9C        		.byte	0x9c
+ 1080 0223 0000 02C4 		.long	0x2c4
+ 1081 0227 08        		.uleb128 0x8
+ 1082 0228 0000 04D7 		.long	0x4d7
+ 1083 022c 0000 0000 		.long	.LBI22
+ 1084 0230 01        		.byte	.LVU121
+ 1085 0231 0000 0000 		.long	.LLRL7
+ 1086 0235 43        		.byte	0x43
+ 1087 0236 0000 0272 		.long	0x272
+ 1088 023a 09        		.uleb128 0x9
+ 1089 023b 0000 0000 		.long	.LLRL7
+ 1090 023f 04        		.uleb128 0x4
+ 1091 0240 0000 04E4 		.long	0x4e4
+ 1092 0244 0000 0000 		.long	.LLST8
+ 1093 0248 0000 0000 		.long	.LVUS8
+ 1094 024c 01        		.uleb128 0x1
+ 1095 024d 0000 0000 		.long	.LVL58
+ 1096 0251 0000 052D 		.long	0x52d
+ 1097 0255 01        		.uleb128 0x1
+ 1098 0256 0000 0000 		.long	.LVL59
+ 1099 025a 0000 052D 		.long	0x52d
+ 1100 025e 01        		.uleb128 0x1
+ 1101 025f 0000 0000 		.long	.LVL61
+ 1102 0263 0000 0536 		.long	0x536
+ 1103 0267 01        		.uleb128 0x1
+ 1104 0268 0000 0000 		.long	.LVL69
+ 1105 026c 0000 052D 		.long	0x52d
+ 1106 0270 00        		.byte	0
+ 1107 0271 00        		.byte	0
+ 1108 0272 01        		.uleb128 0x1
+ 1109 0273 0000 0000 		.long	.LVL54
+ 1110 0277 0000 04D7 		.long	0x4d7
+ 1111 027b 01        		.uleb128 0x1
+ 1112 027c 0000 0000 		.long	.LVL55
+ 1113 0280 0000 0194 		.long	0x194
+ 1114 0284 01        		.uleb128 0x1
+ 1115 0285 0000 0000 		.long	.LVL56
+ 1116 0289 0000 053F 		.long	0x53f
+ 1117 028d 01        		.uleb128 0x1
+ 1118 028e 0000 0000 		.long	.LVL62
+ 1119 0292 0000 052D 		.long	0x52d
+68K GAS  /tmp/ccMR7sQT.s 			page 26
+
+
+ 1120 0296 01        		.uleb128 0x1
+ 1121 0297 0000 0000 		.long	.LVL63
+ 1122 029b 0000 052D 		.long	0x52d
+ 1123 029f 01        		.uleb128 0x1
+ 1124 02a0 0000 0000 		.long	.LVL64
+ 1125 02a4 0000 052D 		.long	0x52d
+ 1126 02a8 01        		.uleb128 0x1
+ 1127 02a9 0000 0000 		.long	.LVL65
+ 1128 02ad 0000 0182 		.long	0x182
+ 1129 02b1 01        		.uleb128 0x1
+ 1130 02b2 0000 0000 		.long	.LVL66
+ 1131 02b6 0000 0194 		.long	0x194
+ 1132 02ba 01        		.uleb128 0x1
+ 1133 02bb 0000 0000 		.long	.LVL67
+ 1134 02bf 0000 053F 		.long	0x53f
+ 1135 02c3 00        		.byte	0
+ 1136 02c4 07        		.uleb128 0x7
+ 1137 02c5 0000 0000 		.long	.LASF28
+ 1138 02c9 2E        		.byte	0x2e
+ 1139 02ca 0000 0000 		.long	.LFB6
+ 1140 02ce 0000 00EE 		.long	.LFE6-.LFB6
+ 1141 02d2 01        		.uleb128 0x1
+ 1142 02d3 9C        		.byte	0x9c
+ 1143 02d4 0000 0375 		.long	0x375
+ 1144 02d8 08        		.uleb128 0x8
+ 1145 02d9 0000 04D7 		.long	0x4d7
+ 1146 02dd 0000 0000 		.long	.LBI16
+ 1147 02e1 01        		.byte	.LVU87
+ 1148 02e2 0000 0000 		.long	.LLRL5
+ 1149 02e6 33        		.byte	0x33
+ 1150 02e7 0000 0323 		.long	0x323
+ 1151 02eb 09        		.uleb128 0x9
+ 1152 02ec 0000 0000 		.long	.LLRL5
+ 1153 02f0 04        		.uleb128 0x4
+ 1154 02f1 0000 04E4 		.long	0x4e4
+ 1155 02f5 0000 0000 		.long	.LLST6
+ 1156 02f9 0000 0000 		.long	.LVUS6
+ 1157 02fd 01        		.uleb128 0x1
+ 1158 02fe 0000 0000 		.long	.LVL42
+ 1159 0302 0000 052D 		.long	0x52d
+ 1160 0306 01        		.uleb128 0x1
+ 1161 0307 0000 0000 		.long	.LVL43
+ 1162 030b 0000 052D 		.long	0x52d
+ 1163 030f 01        		.uleb128 0x1
+ 1164 0310 0000 0000 		.long	.LVL45
+ 1165 0314 0000 0536 		.long	0x536
+ 1166 0318 01        		.uleb128 0x1
+ 1167 0319 0000 0000 		.long	.LVL53
+ 1168 031d 0000 052D 		.long	0x52d
+ 1169 0321 00        		.byte	0
+ 1170 0322 00        		.byte	0
+ 1171 0323 01        		.uleb128 0x1
+ 1172 0324 0000 0000 		.long	.LVL38
+ 1173 0328 0000 04D7 		.long	0x4d7
+ 1174 032c 01        		.uleb128 0x1
+ 1175 032d 0000 0000 		.long	.LVL39
+ 1176 0331 0000 0194 		.long	0x194
+68K GAS  /tmp/ccMR7sQT.s 			page 27
+
+
+ 1177 0335 01        		.uleb128 0x1
+ 1178 0336 0000 0000 		.long	.LVL40
+ 1179 033a 0000 053F 		.long	0x53f
+ 1180 033e 01        		.uleb128 0x1
+ 1181 033f 0000 0000 		.long	.LVL46
+ 1182 0343 0000 052D 		.long	0x52d
+ 1183 0347 01        		.uleb128 0x1
+ 1184 0348 0000 0000 		.long	.LVL47
+ 1185 034c 0000 052D 		.long	0x52d
+ 1186 0350 01        		.uleb128 0x1
+ 1187 0351 0000 0000 		.long	.LVL48
+ 1188 0355 0000 052D 		.long	0x52d
+ 1189 0359 01        		.uleb128 0x1
+ 1190 035a 0000 0000 		.long	.LVL49
+ 1191 035e 0000 0182 		.long	0x182
+ 1192 0362 01        		.uleb128 0x1
+ 1193 0363 0000 0000 		.long	.LVL50
+ 1194 0367 0000 0194 		.long	0x194
+ 1195 036b 01        		.uleb128 0x1
+ 1196 036c 0000 0000 		.long	.LVL51
+ 1197 0370 0000 053F 		.long	0x53f
+ 1198 0374 00        		.byte	0
+ 1199 0375 07        		.uleb128 0x7
+ 1200 0376 0000 0000 		.long	.LASF29
+ 1201 037a 1E        		.byte	0x1e
+ 1202 037b 0000 0000 		.long	.LFB5
+ 1203 037f 0000 00E8 		.long	.LFE5-.LFB5
+ 1204 0383 01        		.uleb128 0x1
+ 1205 0384 9C        		.byte	0x9c
+ 1206 0385 0000 0426 		.long	0x426
+ 1207 0389 08        		.uleb128 0x8
+ 1208 038a 0000 04D7 		.long	0x4d7
+ 1209 038e 0000 0000 		.long	.LBI10
+ 1210 0392 01        		.byte	.LVU53
+ 1211 0393 0000 0000 		.long	.LLRL3
+ 1212 0397 23        		.byte	0x23
+ 1213 0398 0000 03D4 		.long	0x3d4
+ 1214 039c 09        		.uleb128 0x9
+ 1215 039d 0000 0000 		.long	.LLRL3
+ 1216 03a1 04        		.uleb128 0x4
+ 1217 03a2 0000 04E4 		.long	0x4e4
+ 1218 03a6 0000 0000 		.long	.LLST4
+ 1219 03aa 0000 0000 		.long	.LVUS4
+ 1220 03ae 01        		.uleb128 0x1
+ 1221 03af 0000 0000 		.long	.LVL26
+ 1222 03b3 0000 052D 		.long	0x52d
+ 1223 03b7 01        		.uleb128 0x1
+ 1224 03b8 0000 0000 		.long	.LVL27
+ 1225 03bc 0000 052D 		.long	0x52d
+ 1226 03c0 01        		.uleb128 0x1
+ 1227 03c1 0000 0000 		.long	.LVL29
+ 1228 03c5 0000 0536 		.long	0x536
+ 1229 03c9 01        		.uleb128 0x1
+ 1230 03ca 0000 0000 		.long	.LVL37
+ 1231 03ce 0000 052D 		.long	0x52d
+ 1232 03d2 00        		.byte	0
+ 1233 03d3 00        		.byte	0
+68K GAS  /tmp/ccMR7sQT.s 			page 28
+
+
+ 1234 03d4 01        		.uleb128 0x1
+ 1235 03d5 0000 0000 		.long	.LVL22
+ 1236 03d9 0000 04D7 		.long	0x4d7
+ 1237 03dd 01        		.uleb128 0x1
+ 1238 03de 0000 0000 		.long	.LVL23
+ 1239 03e2 0000 0194 		.long	0x194
+ 1240 03e6 01        		.uleb128 0x1
+ 1241 03e7 0000 0000 		.long	.LVL24
+ 1242 03eb 0000 053F 		.long	0x53f
+ 1243 03ef 01        		.uleb128 0x1
+ 1244 03f0 0000 0000 		.long	.LVL30
+ 1245 03f4 0000 052D 		.long	0x52d
+ 1246 03f8 01        		.uleb128 0x1
+ 1247 03f9 0000 0000 		.long	.LVL31
+ 1248 03fd 0000 052D 		.long	0x52d
+ 1249 0401 01        		.uleb128 0x1
+ 1250 0402 0000 0000 		.long	.LVL32
+ 1251 0406 0000 052D 		.long	0x52d
+ 1252 040a 01        		.uleb128 0x1
+ 1253 040b 0000 0000 		.long	.LVL33
+ 1254 040f 0000 0182 		.long	0x182
+ 1255 0413 01        		.uleb128 0x1
+ 1256 0414 0000 0000 		.long	.LVL34
+ 1257 0418 0000 0194 		.long	0x194
+ 1258 041c 01        		.uleb128 0x1
+ 1259 041d 0000 0000 		.long	.LVL35
+ 1260 0421 0000 053F 		.long	0x53f
+ 1261 0425 00        		.byte	0
+ 1262 0426 07        		.uleb128 0x7
+ 1263 0427 0000 0000 		.long	.LASF30
+ 1264 042b 0E        		.byte	0xe
+ 1265 042c 0000 0000 		.long	.LFB4
+ 1266 0430 0000 00E8 		.long	.LFE4-.LFB4
+ 1267 0434 01        		.uleb128 0x1
+ 1268 0435 9C        		.byte	0x9c
+ 1269 0436 0000 04D7 		.long	0x4d7
+ 1270 043a 08        		.uleb128 0x8
+ 1271 043b 0000 04D7 		.long	0x4d7
+ 1272 043f 0000 0000 		.long	.LBI4
+ 1273 0443 01        		.byte	.LVU19
+ 1274 0444 0000 0000 		.long	.LLRL1
+ 1275 0448 13        		.byte	0x13
+ 1276 0449 0000 0485 		.long	0x485
+ 1277 044d 09        		.uleb128 0x9
+ 1278 044e 0000 0000 		.long	.LLRL1
+ 1279 0452 04        		.uleb128 0x4
+ 1280 0453 0000 04E4 		.long	0x4e4
+ 1281 0457 0000 0000 		.long	.LLST2
+ 1282 045b 0000 0000 		.long	.LVUS2
+ 1283 045f 01        		.uleb128 0x1
+ 1284 0460 0000 0000 		.long	.LVL10
+ 1285 0464 0000 052D 		.long	0x52d
+ 1286 0468 01        		.uleb128 0x1
+ 1287 0469 0000 0000 		.long	.LVL11
+ 1288 046d 0000 052D 		.long	0x52d
+ 1289 0471 01        		.uleb128 0x1
+ 1290 0472 0000 0000 		.long	.LVL13
+68K GAS  /tmp/ccMR7sQT.s 			page 29
+
+
+ 1291 0476 0000 0536 		.long	0x536
+ 1292 047a 01        		.uleb128 0x1
+ 1293 047b 0000 0000 		.long	.LVL21
+ 1294 047f 0000 052D 		.long	0x52d
+ 1295 0483 00        		.byte	0
+ 1296 0484 00        		.byte	0
+ 1297 0485 01        		.uleb128 0x1
+ 1298 0486 0000 0000 		.long	.LVL6
+ 1299 048a 0000 04D7 		.long	0x4d7
+ 1300 048e 01        		.uleb128 0x1
+ 1301 048f 0000 0000 		.long	.LVL7
+ 1302 0493 0000 0194 		.long	0x194
+ 1303 0497 01        		.uleb128 0x1
+ 1304 0498 0000 0000 		.long	.LVL8
+ 1305 049c 0000 053F 		.long	0x53f
+ 1306 04a0 01        		.uleb128 0x1
+ 1307 04a1 0000 0000 		.long	.LVL14
+ 1308 04a5 0000 052D 		.long	0x52d
+ 1309 04a9 01        		.uleb128 0x1
+ 1310 04aa 0000 0000 		.long	.LVL15
+ 1311 04ae 0000 052D 		.long	0x52d
+ 1312 04b2 01        		.uleb128 0x1
+ 1313 04b3 0000 0000 		.long	.LVL16
+ 1314 04b7 0000 052D 		.long	0x52d
+ 1315 04bb 01        		.uleb128 0x1
+ 1316 04bc 0000 0000 		.long	.LVL17
+ 1317 04c0 0000 0182 		.long	0x182
+ 1318 04c4 01        		.uleb128 0x1
+ 1319 04c5 0000 0000 		.long	.LVL18
+ 1320 04c9 0000 0194 		.long	0x194
+ 1321 04cd 01        		.uleb128 0x1
+ 1322 04ce 0000 0000 		.long	.LVL19
+ 1323 04d2 0000 053F 		.long	0x53f
+ 1324 04d6 00        		.byte	0
+ 1325 04d7 1C        		.uleb128 0x1c
+ 1326 04d8 0000 0000 		.long	.LASF31
+ 1327 04dc 01        		.byte	0x1
+ 1328 04dd 04        		.byte	0x4
+ 1329 04de 06        		.byte	0x6
+ 1330 04df 01        		.byte	0x1
+ 1331 04e0 0000 04F1 		.long	0x4f1
+ 1332 04e4 1D        		.uleb128 0x1d
+ 1333 04e5 0000 0000 		.long	.LASF42
+ 1334 04e9 01        		.byte	0x1
+ 1335 04ea 05        		.byte	0x5
+ 1336 04eb 12        		.byte	0x12
+ 1337 04ec 0000 0026 		.long	0x26
+ 1338 04f0 00        		.byte	0
+ 1339 04f1 1E        		.uleb128 0x1e
+ 1340 04f2 0000 04D7 		.long	0x4d7
+ 1341 04f6 0000 0000 		.long	.LFB3
+ 1342 04fa 0000 0054 		.long	.LFE3-.LFB3
+ 1343 04fe 01        		.uleb128 0x1
+ 1344 04ff 9C        		.byte	0x9c
+ 1345 0500 0000 052D 		.long	0x52d
+ 1346 0504 04        		.uleb128 0x4
+ 1347 0505 0000 04E4 		.long	0x4e4
+68K GAS  /tmp/ccMR7sQT.s 			page 30
+
+
+ 1348 0509 0000 0000 		.long	.LLST0
+ 1349 050d 0000 0000 		.long	.LVUS0
+ 1350 0511 01        		.uleb128 0x1
+ 1351 0512 0000 0000 		.long	.LVL1
+ 1352 0516 0000 052D 		.long	0x52d
+ 1353 051a 01        		.uleb128 0x1
+ 1354 051b 0000 0000 		.long	.LVL2
+ 1355 051f 0000 052D 		.long	0x52d
+ 1356 0523 01        		.uleb128 0x1
+ 1357 0524 0000 0000 		.long	.LVL4
+ 1358 0528 0000 0536 		.long	0x536
+ 1359 052c 00        		.byte	0
+ 1360 052d 0C        		.uleb128 0xc
+ 1361 052e 0000 0000 		.long	.LASF26
+ 1362 0532 0000 0000 		.long	.LASF33
+ 1363 0536 0C        		.uleb128 0xc
+ 1364 0537 0000 0000 		.long	.LASF32
+ 1365 053b 0000 0000 		.long	.LASF34
+ 1366 053f 0C        		.uleb128 0xc
+ 1367 0540 0000 0000 		.long	.LASF35
+ 1368 0544 0000 0000 		.long	.LASF36
+ 1369 0548 00        		.byte	0
+ 1370               		.section	.debug_abbrev,"",@progbits
+ 1371               	.Ldebug_abbrev0:
+ 1372 0000 01        		.uleb128 0x1
+ 1373 0001 48        		.uleb128 0x48
+ 1374 0002 00        		.byte	0
+ 1375 0003 7D        		.uleb128 0x7d
+ 1376 0004 01        		.uleb128 0x1
+ 1377 0005 7F        		.uleb128 0x7f
+ 1378 0006 13        		.uleb128 0x13
+ 1379 0007 00        		.byte	0
+ 1380 0008 00        		.byte	0
+ 1381 0009 02        		.uleb128 0x2
+ 1382 000a 24        		.uleb128 0x24
+ 1383 000b 00        		.byte	0
+ 1384 000c 0B        		.uleb128 0xb
+ 1385 000d 0B        		.uleb128 0xb
+ 1386 000e 3E        		.uleb128 0x3e
+ 1387 000f 0B        		.uleb128 0xb
+ 1388 0010 03        		.uleb128 0x3
+ 1389 0011 0E        		.uleb128 0xe
+ 1390 0012 00        		.byte	0
+ 1391 0013 00        		.byte	0
+ 1392 0014 03        		.uleb128 0x3
+ 1393 0015 0D        		.uleb128 0xd
+ 1394 0016 00        		.byte	0
+ 1395 0017 03        		.uleb128 0x3
+ 1396 0018 0E        		.uleb128 0xe
+ 1397 0019 3A        		.uleb128 0x3a
+ 1398 001a 21        		.uleb128 0x21
+ 1399 001b 02        		.sleb128 2
+ 1400 001c 3B        		.uleb128 0x3b
+ 1401 001d 0B        		.uleb128 0xb
+ 1402 001e 39        		.uleb128 0x39
+ 1403 001f 0B        		.uleb128 0xb
+ 1404 0020 49        		.uleb128 0x49
+68K GAS  /tmp/ccMR7sQT.s 			page 31
+
+
+ 1405 0021 13        		.uleb128 0x13
+ 1406 0022 38        		.uleb128 0x38
+ 1407 0023 0B        		.uleb128 0xb
+ 1408 0024 00        		.byte	0
+ 1409 0025 00        		.byte	0
+ 1410 0026 04        		.uleb128 0x4
+ 1411 0027 34        		.uleb128 0x34
+ 1412 0028 00        		.byte	0
+ 1413 0029 31        		.uleb128 0x31
+ 1414 002a 13        		.uleb128 0x13
+ 1415 002b 02        		.uleb128 0x2
+ 1416 002c 17        		.uleb128 0x17
+ 1417 002d B742      		.uleb128 0x2137
+ 1418 002f 17        		.uleb128 0x17
+ 1419 0030 00        		.byte	0
+ 1420 0031 00        		.byte	0
+ 1421 0032 05        		.uleb128 0x5
+ 1422 0033 18        		.uleb128 0x18
+ 1423 0034 00        		.byte	0
+ 1424 0035 00        		.byte	0
+ 1425 0036 00        		.byte	0
+ 1426 0037 06        		.uleb128 0x6
+ 1427 0038 05        		.uleb128 0x5
+ 1428 0039 00        		.byte	0
+ 1429 003a 49        		.uleb128 0x49
+ 1430 003b 13        		.uleb128 0x13
+ 1431 003c 00        		.byte	0
+ 1432 003d 00        		.byte	0
+ 1433 003e 07        		.uleb128 0x7
+ 1434 003f 2E        		.uleb128 0x2e
+ 1435 0040 01        		.byte	0x1
+ 1436 0041 3F        		.uleb128 0x3f
+ 1437 0042 19        		.uleb128 0x19
+ 1438 0043 03        		.uleb128 0x3
+ 1439 0044 0E        		.uleb128 0xe
+ 1440 0045 3A        		.uleb128 0x3a
+ 1441 0046 21        		.uleb128 0x21
+ 1442 0047 01        		.sleb128 1
+ 1443 0048 3B        		.uleb128 0x3b
+ 1444 0049 0B        		.uleb128 0xb
+ 1445 004a 39        		.uleb128 0x39
+ 1446 004b 21        		.uleb128 0x21
+ 1447 004c 06        		.sleb128 6
+ 1448 004d 11        		.uleb128 0x11
+ 1449 004e 01        		.uleb128 0x1
+ 1450 004f 12        		.uleb128 0x12
+ 1451 0050 06        		.uleb128 0x6
+ 1452 0051 40        		.uleb128 0x40
+ 1453 0052 18        		.uleb128 0x18
+ 1454 0053 7A        		.uleb128 0x7a
+ 1455 0054 19        		.uleb128 0x19
+ 1456 0055 01        		.uleb128 0x1
+ 1457 0056 13        		.uleb128 0x13
+ 1458 0057 00        		.byte	0
+ 1459 0058 00        		.byte	0
+ 1460 0059 08        		.uleb128 0x8
+ 1461 005a 1D        		.uleb128 0x1d
+68K GAS  /tmp/ccMR7sQT.s 			page 32
+
+
+ 1462 005b 01        		.byte	0x1
+ 1463 005c 31        		.uleb128 0x31
+ 1464 005d 13        		.uleb128 0x13
+ 1465 005e 52        		.uleb128 0x52
+ 1466 005f 01        		.uleb128 0x1
+ 1467 0060 B842      		.uleb128 0x2138
+ 1468 0062 0B        		.uleb128 0xb
+ 1469 0063 55        		.uleb128 0x55
+ 1470 0064 17        		.uleb128 0x17
+ 1471 0065 58        		.uleb128 0x58
+ 1472 0066 21        		.uleb128 0x21
+ 1473 0067 01        		.sleb128 1
+ 1474 0068 59        		.uleb128 0x59
+ 1475 0069 0B        		.uleb128 0xb
+ 1476 006a 57        		.uleb128 0x57
+ 1477 006b 21        		.uleb128 0x21
+ 1478 006c 09        		.sleb128 9
+ 1479 006d 01        		.uleb128 0x1
+ 1480 006e 13        		.uleb128 0x13
+ 1481 006f 00        		.byte	0
+ 1482 0070 00        		.byte	0
+ 1483 0071 09        		.uleb128 0x9
+ 1484 0072 0B        		.uleb128 0xb
+ 1485 0073 01        		.byte	0x1
+ 1486 0074 55        		.uleb128 0x55
+ 1487 0075 17        		.uleb128 0x17
+ 1488 0076 00        		.byte	0
+ 1489 0077 00        		.byte	0
+ 1490 0078 0A        		.uleb128 0xa
+ 1491 0079 16        		.uleb128 0x16
+ 1492 007a 00        		.byte	0
+ 1493 007b 03        		.uleb128 0x3
+ 1494 007c 0E        		.uleb128 0xe
+ 1495 007d 3A        		.uleb128 0x3a
+ 1496 007e 21        		.uleb128 0x21
+ 1497 007f 02        		.sleb128 2
+ 1498 0080 3B        		.uleb128 0x3b
+ 1499 0081 0B        		.uleb128 0xb
+ 1500 0082 39        		.uleb128 0x39
+ 1501 0083 0B        		.uleb128 0xb
+ 1502 0084 49        		.uleb128 0x49
+ 1503 0085 13        		.uleb128 0x13
+ 1504 0086 00        		.byte	0
+ 1505 0087 00        		.byte	0
+ 1506 0088 0B        		.uleb128 0xb
+ 1507 0089 34        		.uleb128 0x34
+ 1508 008a 00        		.byte	0
+ 1509 008b 03        		.uleb128 0x3
+ 1510 008c 0E        		.uleb128 0xe
+ 1511 008d 3A        		.uleb128 0x3a
+ 1512 008e 21        		.uleb128 0x21
+ 1513 008f 02        		.sleb128 2
+ 1514 0090 3B        		.uleb128 0x3b
+ 1515 0091 0B        		.uleb128 0xb
+ 1516 0092 39        		.uleb128 0x39
+ 1517 0093 0B        		.uleb128 0xb
+ 1518 0094 49        		.uleb128 0x49
+68K GAS  /tmp/ccMR7sQT.s 			page 33
+
+
+ 1519 0095 13        		.uleb128 0x13
+ 1520 0096 3F        		.uleb128 0x3f
+ 1521 0097 19        		.uleb128 0x19
+ 1522 0098 3C        		.uleb128 0x3c
+ 1523 0099 19        		.uleb128 0x19
+ 1524 009a 00        		.byte	0
+ 1525 009b 00        		.byte	0
+ 1526 009c 0C        		.uleb128 0xc
+ 1527 009d 2E        		.uleb128 0x2e
+ 1528 009e 00        		.byte	0
+ 1529 009f 3F        		.uleb128 0x3f
+ 1530 00a0 19        		.uleb128 0x19
+ 1531 00a1 3C        		.uleb128 0x3c
+ 1532 00a2 19        		.uleb128 0x19
+ 1533 00a3 6E        		.uleb128 0x6e
+ 1534 00a4 0E        		.uleb128 0xe
+ 1535 00a5 03        		.uleb128 0x3
+ 1536 00a6 0E        		.uleb128 0xe
+ 1537 00a7 3A        		.uleb128 0x3a
+ 1538 00a8 21        		.uleb128 0x21
+ 1539 00a9 03        		.sleb128 3
+ 1540 00aa 3B        		.uleb128 0x3b
+ 1541 00ab 21        		.uleb128 0x21
+ 1542 00ac 00        		.sleb128 0
+ 1543 00ad 00        		.byte	0
+ 1544 00ae 00        		.byte	0
+ 1545 00af 0D        		.uleb128 0xd
+ 1546 00b0 13        		.uleb128 0x13
+ 1547 00b1 01        		.byte	0x1
+ 1548 00b2 0B        		.uleb128 0xb
+ 1549 00b3 0B        		.uleb128 0xb
+ 1550 00b4 3A        		.uleb128 0x3a
+ 1551 00b5 21        		.uleb128 0x21
+ 1552 00b6 02        		.sleb128 2
+ 1553 00b7 3B        		.uleb128 0x3b
+ 1554 00b8 0B        		.uleb128 0xb
+ 1555 00b9 39        		.uleb128 0x39
+ 1556 00ba 21        		.uleb128 0x21
+ 1557 00bb 09        		.sleb128 9
+ 1558 00bc 01        		.uleb128 0x1
+ 1559 00bd 13        		.uleb128 0x13
+ 1560 00be 00        		.byte	0
+ 1561 00bf 00        		.byte	0
+ 1562 00c0 0E        		.uleb128 0xe
+ 1563 00c1 0F        		.uleb128 0xf
+ 1564 00c2 00        		.byte	0
+ 1565 00c3 0B        		.uleb128 0xb
+ 1566 00c4 21        		.uleb128 0x21
+ 1567 00c5 04        		.sleb128 4
+ 1568 00c6 49        		.uleb128 0x49
+ 1569 00c7 13        		.uleb128 0x13
+ 1570 00c8 00        		.byte	0
+ 1571 00c9 00        		.byte	0
+ 1572 00ca 0F        		.uleb128 0xf
+ 1573 00cb 01        		.uleb128 0x1
+ 1574 00cc 01        		.byte	0x1
+ 1575 00cd 49        		.uleb128 0x49
+68K GAS  /tmp/ccMR7sQT.s 			page 34
+
+
+ 1576 00ce 13        		.uleb128 0x13
+ 1577 00cf 01        		.uleb128 0x1
+ 1578 00d0 13        		.uleb128 0x13
+ 1579 00d1 00        		.byte	0
+ 1580 00d2 00        		.byte	0
+ 1581 00d3 10        		.uleb128 0x10
+ 1582 00d4 21        		.uleb128 0x21
+ 1583 00d5 00        		.byte	0
+ 1584 00d6 49        		.uleb128 0x49
+ 1585 00d7 13        		.uleb128 0x13
+ 1586 00d8 2F        		.uleb128 0x2f
+ 1587 00d9 0B        		.uleb128 0xb
+ 1588 00da 00        		.byte	0
+ 1589 00db 00        		.byte	0
+ 1590 00dc 11        		.uleb128 0x11
+ 1591 00dd 2E        		.uleb128 0x2e
+ 1592 00de 01        		.byte	0x1
+ 1593 00df 3F        		.uleb128 0x3f
+ 1594 00e0 19        		.uleb128 0x19
+ 1595 00e1 03        		.uleb128 0x3
+ 1596 00e2 0E        		.uleb128 0xe
+ 1597 00e3 3A        		.uleb128 0x3a
+ 1598 00e4 21        		.uleb128 0x21
+ 1599 00e5 02        		.sleb128 2
+ 1600 00e6 3B        		.uleb128 0x3b
+ 1601 00e7 0B        		.uleb128 0xb
+ 1602 00e8 39        		.uleb128 0x39
+ 1603 00e9 21        		.uleb128 0x21
+ 1604 00ea 06        		.sleb128 6
+ 1605 00eb 3C        		.uleb128 0x3c
+ 1606 00ec 19        		.uleb128 0x19
+ 1607 00ed 01        		.uleb128 0x1
+ 1608 00ee 13        		.uleb128 0x13
+ 1609 00ef 00        		.byte	0
+ 1610 00f0 00        		.byte	0
+ 1611 00f1 12        		.uleb128 0x12
+ 1612 00f2 2E        		.uleb128 0x2e
+ 1613 00f3 01        		.byte	0x1
+ 1614 00f4 3F        		.uleb128 0x3f
+ 1615 00f5 19        		.uleb128 0x19
+ 1616 00f6 03        		.uleb128 0x3
+ 1617 00f7 08        		.uleb128 0x8
+ 1618 00f8 3A        		.uleb128 0x3a
+ 1619 00f9 21        		.uleb128 0x21
+ 1620 00fa 02        		.sleb128 2
+ 1621 00fb 3B        		.uleb128 0x3b
+ 1622 00fc 0B        		.uleb128 0xb
+ 1623 00fd 39        		.uleb128 0x39
+ 1624 00fe 21        		.uleb128 0x21
+ 1625 00ff 0C        		.sleb128 12
+ 1626 0100 27        		.uleb128 0x27
+ 1627 0101 19        		.uleb128 0x19
+ 1628 0102 49        		.uleb128 0x49
+ 1629 0103 13        		.uleb128 0x13
+ 1630 0104 3C        		.uleb128 0x3c
+ 1631 0105 19        		.uleb128 0x19
+ 1632 0106 01        		.uleb128 0x1
+68K GAS  /tmp/ccMR7sQT.s 			page 35
+
+
+ 1633 0107 13        		.uleb128 0x13
+ 1634 0108 00        		.byte	0
+ 1635 0109 00        		.byte	0
+ 1636 010a 13        		.uleb128 0x13
+ 1637 010b 11        		.uleb128 0x11
+ 1638 010c 01        		.byte	0x1
+ 1639 010d 25        		.uleb128 0x25
+ 1640 010e 0E        		.uleb128 0xe
+ 1641 010f 13        		.uleb128 0x13
+ 1642 0110 0B        		.uleb128 0xb
+ 1643 0111 03        		.uleb128 0x3
+ 1644 0112 0E        		.uleb128 0xe
+ 1645 0113 1B        		.uleb128 0x1b
+ 1646 0114 0E        		.uleb128 0xe
+ 1647 0115 55        		.uleb128 0x55
+ 1648 0116 17        		.uleb128 0x17
+ 1649 0117 11        		.uleb128 0x11
+ 1650 0118 01        		.uleb128 0x1
+ 1651 0119 10        		.uleb128 0x10
+ 1652 011a 17        		.uleb128 0x17
+ 1653 011b 00        		.byte	0
+ 1654 011c 00        		.byte	0
+ 1655 011d 14        		.uleb128 0x14
+ 1656 011e 24        		.uleb128 0x24
+ 1657 011f 00        		.byte	0
+ 1658 0120 0B        		.uleb128 0xb
+ 1659 0121 0B        		.uleb128 0xb
+ 1660 0122 3E        		.uleb128 0x3e
+ 1661 0123 0B        		.uleb128 0xb
+ 1662 0124 03        		.uleb128 0x3
+ 1663 0125 08        		.uleb128 0x8
+ 1664 0126 00        		.byte	0
+ 1665 0127 00        		.byte	0
+ 1666 0128 15        		.uleb128 0x15
+ 1667 0129 15        		.uleb128 0x15
+ 1668 012a 01        		.byte	0x1
+ 1669 012b 01        		.uleb128 0x1
+ 1670 012c 13        		.uleb128 0x13
+ 1671 012d 00        		.byte	0
+ 1672 012e 00        		.byte	0
+ 1673 012f 16        		.uleb128 0x16
+ 1674 0130 0F        		.uleb128 0xf
+ 1675 0131 00        		.byte	0
+ 1676 0132 0B        		.uleb128 0xb
+ 1677 0133 0B        		.uleb128 0xb
+ 1678 0134 00        		.byte	0
+ 1679 0135 00        		.byte	0
+ 1680 0136 17        		.uleb128 0x17
+ 1681 0137 26        		.uleb128 0x26
+ 1682 0138 00        		.byte	0
+ 1683 0139 49        		.uleb128 0x49
+ 1684 013a 13        		.uleb128 0x13
+ 1685 013b 00        		.byte	0
+ 1686 013c 00        		.byte	0
+ 1687 013d 18        		.uleb128 0x18
+ 1688 013e 2E        		.uleb128 0x2e
+ 1689 013f 01        		.byte	0x1
+68K GAS  /tmp/ccMR7sQT.s 			page 36
+
+
+ 1690 0140 3F        		.uleb128 0x3f
+ 1691 0141 19        		.uleb128 0x19
+ 1692 0142 03        		.uleb128 0x3
+ 1693 0143 0E        		.uleb128 0xe
+ 1694 0144 3A        		.uleb128 0x3a
+ 1695 0145 0B        		.uleb128 0xb
+ 1696 0146 3B        		.uleb128 0x3b
+ 1697 0147 0B        		.uleb128 0xb
+ 1698 0148 39        		.uleb128 0x39
+ 1699 0149 0B        		.uleb128 0xb
+ 1700 014a 27        		.uleb128 0x27
+ 1701 014b 19        		.uleb128 0x19
+ 1702 014c 3C        		.uleb128 0x3c
+ 1703 014d 19        		.uleb128 0x19
+ 1704 014e 01        		.uleb128 0x1
+ 1705 014f 13        		.uleb128 0x13
+ 1706 0150 00        		.byte	0
+ 1707 0151 00        		.byte	0
+ 1708 0152 19        		.uleb128 0x19
+ 1709 0153 2E        		.uleb128 0x2e
+ 1710 0154 01        		.byte	0x1
+ 1711 0155 3F        		.uleb128 0x3f
+ 1712 0156 19        		.uleb128 0x19
+ 1713 0157 03        		.uleb128 0x3
+ 1714 0158 0E        		.uleb128 0xe
+ 1715 0159 3A        		.uleb128 0x3a
+ 1716 015a 0B        		.uleb128 0xb
+ 1717 015b 3B        		.uleb128 0x3b
+ 1718 015c 0B        		.uleb128 0xb
+ 1719 015d 39        		.uleb128 0x39
+ 1720 015e 0B        		.uleb128 0xb
+ 1721 015f 27        		.uleb128 0x27
+ 1722 0160 19        		.uleb128 0x19
+ 1723 0161 49        		.uleb128 0x49
+ 1724 0162 13        		.uleb128 0x13
+ 1725 0163 3C        		.uleb128 0x3c
+ 1726 0164 19        		.uleb128 0x19
+ 1727 0165 01        		.uleb128 0x1
+ 1728 0166 13        		.uleb128 0x13
+ 1729 0167 00        		.byte	0
+ 1730 0168 00        		.byte	0
+ 1731 0169 1A        		.uleb128 0x1a
+ 1732 016a 2E        		.uleb128 0x2e
+ 1733 016b 01        		.byte	0x1
+ 1734 016c 3F        		.uleb128 0x3f
+ 1735 016d 19        		.uleb128 0x19
+ 1736 016e 03        		.uleb128 0x3
+ 1737 016f 0E        		.uleb128 0xe
+ 1738 0170 3A        		.uleb128 0x3a
+ 1739 0171 0B        		.uleb128 0xb
+ 1740 0172 3B        		.uleb128 0x3b
+ 1741 0173 0B        		.uleb128 0xb
+ 1742 0174 39        		.uleb128 0x39
+ 1743 0175 0B        		.uleb128 0xb
+ 1744 0176 27        		.uleb128 0x27
+ 1745 0177 19        		.uleb128 0x19
+ 1746 0178 11        		.uleb128 0x11
+68K GAS  /tmp/ccMR7sQT.s 			page 37
+
+
+ 1747 0179 01        		.uleb128 0x1
+ 1748 017a 12        		.uleb128 0x12
+ 1749 017b 06        		.uleb128 0x6
+ 1750 017c 40        		.uleb128 0x40
+ 1751 017d 18        		.uleb128 0x18
+ 1752 017e 7A        		.uleb128 0x7a
+ 1753 017f 19        		.uleb128 0x19
+ 1754 0180 01        		.uleb128 0x1
+ 1755 0181 13        		.uleb128 0x13
+ 1756 0182 00        		.byte	0
+ 1757 0183 00        		.byte	0
+ 1758 0184 1B        		.uleb128 0x1b
+ 1759 0185 48        		.uleb128 0x48
+ 1760 0186 00        		.byte	0
+ 1761 0187 7D        		.uleb128 0x7d
+ 1762 0188 01        		.uleb128 0x1
+ 1763 0189 8201      		.uleb128 0x82
+ 1764 018b 19        		.uleb128 0x19
+ 1765 018c 7F        		.uleb128 0x7f
+ 1766 018d 13        		.uleb128 0x13
+ 1767 018e 00        		.byte	0
+ 1768 018f 00        		.byte	0
+ 1769 0190 1C        		.uleb128 0x1c
+ 1770 0191 2E        		.uleb128 0x2e
+ 1771 0192 01        		.byte	0x1
+ 1772 0193 3F        		.uleb128 0x3f
+ 1773 0194 19        		.uleb128 0x19
+ 1774 0195 03        		.uleb128 0x3
+ 1775 0196 0E        		.uleb128 0xe
+ 1776 0197 3A        		.uleb128 0x3a
+ 1777 0198 0B        		.uleb128 0xb
+ 1778 0199 3B        		.uleb128 0x3b
+ 1779 019a 0B        		.uleb128 0xb
+ 1780 019b 39        		.uleb128 0x39
+ 1781 019c 0B        		.uleb128 0xb
+ 1782 019d 20        		.uleb128 0x20
+ 1783 019e 0B        		.uleb128 0xb
+ 1784 019f 01        		.uleb128 0x1
+ 1785 01a0 13        		.uleb128 0x13
+ 1786 01a1 00        		.byte	0
+ 1787 01a2 00        		.byte	0
+ 1788 01a3 1D        		.uleb128 0x1d
+ 1789 01a4 34        		.uleb128 0x34
+ 1790 01a5 00        		.byte	0
+ 1791 01a6 03        		.uleb128 0x3
+ 1792 01a7 0E        		.uleb128 0xe
+ 1793 01a8 3A        		.uleb128 0x3a
+ 1794 01a9 0B        		.uleb128 0xb
+ 1795 01aa 3B        		.uleb128 0x3b
+ 1796 01ab 0B        		.uleb128 0xb
+ 1797 01ac 39        		.uleb128 0x39
+ 1798 01ad 0B        		.uleb128 0xb
+ 1799 01ae 49        		.uleb128 0x49
+ 1800 01af 13        		.uleb128 0x13
+ 1801 01b0 00        		.byte	0
+ 1802 01b1 00        		.byte	0
+ 1803 01b2 1E        		.uleb128 0x1e
+68K GAS  /tmp/ccMR7sQT.s 			page 38
+
+
+ 1804 01b3 2E        		.uleb128 0x2e
+ 1805 01b4 01        		.byte	0x1
+ 1806 01b5 31        		.uleb128 0x31
+ 1807 01b6 13        		.uleb128 0x13
+ 1808 01b7 11        		.uleb128 0x11
+ 1809 01b8 01        		.uleb128 0x1
+ 1810 01b9 12        		.uleb128 0x12
+ 1811 01ba 06        		.uleb128 0x6
+ 1812 01bb 40        		.uleb128 0x40
+ 1813 01bc 18        		.uleb128 0x18
+ 1814 01bd 7A        		.uleb128 0x7a
+ 1815 01be 19        		.uleb128 0x19
+ 1816 01bf 01        		.uleb128 0x1
+ 1817 01c0 13        		.uleb128 0x13
+ 1818 01c1 00        		.byte	0
+ 1819 01c2 00        		.byte	0
+ 1820 01c3 00        		.byte	0
+ 1821               		.section	.debug_loclists,"",@progbits
+ 1822 0000 0000 006B 		.long	.Ldebug_loc3-.Ldebug_loc2
+ 1823               	.Ldebug_loc2:
+ 1824 0004 0005      		.word	0x5
+ 1825 0006 04        		.byte	0x4
+ 1826 0007 00        		.byte	0
+ 1827 0008 0000 0000 		.long	0
+ 1828               	.Ldebug_loc0:
+ 1829               	.LVUS8:
+ 1830 000c 00        		.uleb128 .LVU124
+ 1831 000d 00        		.uleb128 .LVU132
+ 1832 000e 00        		.uleb128 .LVU146
+ 1833 000f 00        		.uleb128 0
+ 1834               	.LLST8:
+ 1835 0010 06        		.byte	0x6
+ 1836 0011 0000 0000 		.long	.LVL57
+ 1837 0015 04        		.byte	0x4
+ 1838 0016 00        		.uleb128 .LVL57-.LVL57
+ 1839 0017 34        		.uleb128 .LVL61-.LVL57
+ 1840 0018 01        		.uleb128 0x1
+ 1841 0019 54        		.byte	0x54
+ 1842 001a 04        		.byte	0x4
+ 1843 001b 9001      		.uleb128 .LVL68-.LVL57
+ 1844 001d A401      		.uleb128 .LFE7-.LVL57
+ 1845 001f 01        		.uleb128 0x1
+ 1846 0020 54        		.byte	0x54
+ 1847 0021 00        		.byte	0
+ 1848               	.LVUS6:
+ 1849 0022 00        		.uleb128 .LVU90
+ 1850 0023 00        		.uleb128 .LVU98
+ 1851 0024 00        		.uleb128 .LVU112
+ 1852 0025 00        		.uleb128 0
+ 1853               	.LLST6:
+ 1854 0026 06        		.byte	0x6
+ 1855 0027 0000 0000 		.long	.LVL41
+ 1856 002b 04        		.byte	0x4
+ 1857 002c 00        		.uleb128 .LVL41-.LVL41
+ 1858 002d 34        		.uleb128 .LVL45-.LVL41
+ 1859 002e 01        		.uleb128 0x1
+ 1860 002f 54        		.byte	0x54
+68K GAS  /tmp/ccMR7sQT.s 			page 39
+
+
+ 1861 0030 04        		.byte	0x4
+ 1862 0031 9001      		.uleb128 .LVL52-.LVL41
+ 1863 0033 A401      		.uleb128 .LFE6-.LVL41
+ 1864 0035 01        		.uleb128 0x1
+ 1865 0036 54        		.byte	0x54
+ 1866 0037 00        		.byte	0
+ 1867               	.LVUS4:
+ 1868 0038 00        		.uleb128 .LVU56
+ 1869 0039 00        		.uleb128 .LVU64
+ 1870 003a 00        		.uleb128 .LVU78
+ 1871 003b 00        		.uleb128 0
+ 1872               	.LLST4:
+ 1873 003c 06        		.byte	0x6
+ 1874 003d 0000 0000 		.long	.LVL25
+ 1875 0041 04        		.byte	0x4
+ 1876 0042 00        		.uleb128 .LVL25-.LVL25
+ 1877 0043 34        		.uleb128 .LVL29-.LVL25
+ 1878 0044 01        		.uleb128 0x1
+ 1879 0045 54        		.byte	0x54
+ 1880 0046 04        		.byte	0x4
+ 1881 0047 8C01      		.uleb128 .LVL36-.LVL25
+ 1882 0049 A001      		.uleb128 .LFE5-.LVL25
+ 1883 004b 01        		.uleb128 0x1
+ 1884 004c 54        		.byte	0x54
+ 1885 004d 00        		.byte	0
+ 1886               	.LVUS2:
+ 1887 004e 00        		.uleb128 .LVU22
+ 1888 004f 00        		.uleb128 .LVU30
+ 1889 0050 00        		.uleb128 .LVU44
+ 1890 0051 00        		.uleb128 0
+ 1891               	.LLST2:
+ 1892 0052 06        		.byte	0x6
+ 1893 0053 0000 0000 		.long	.LVL9
+ 1894 0057 04        		.byte	0x4
+ 1895 0058 00        		.uleb128 .LVL9-.LVL9
+ 1896 0059 34        		.uleb128 .LVL13-.LVL9
+ 1897 005a 01        		.uleb128 0x1
+ 1898 005b 54        		.byte	0x54
+ 1899 005c 04        		.byte	0x4
+ 1900 005d 8C01      		.uleb128 .LVL20-.LVL9
+ 1901 005f A001      		.uleb128 .LFE4-.LVL9
+ 1902 0061 01        		.uleb128 0x1
+ 1903 0062 54        		.byte	0x54
+ 1904 0063 00        		.byte	0
+ 1905               	.LVUS0:
+ 1906 0064 00        		.uleb128 .LVU3
+ 1907 0065 00        		.uleb128 .LVU12
+ 1908               	.LLST0:
+ 1909 0066 08        		.byte	0x8
+ 1910 0067 0000 0000 		.long	.LVL0
+ 1911 006b 48        		.uleb128 .LVL5-.LVL0
+ 1912 006c 01        		.uleb128 0x1
+ 1913 006d 52        		.byte	0x52
+ 1914 006e 00        		.byte	0
+ 1915               	.Ldebug_loc3:
+ 1916               		.section	.debug_aranges,"",@progbits
+ 1917 0000 0000 0024 		.long	0x24
+68K GAS  /tmp/ccMR7sQT.s 			page 40
+
+
+ 1918 0004 0002      		.word	0x2
+ 1919 0006 0000 0000 		.long	.Ldebug_info0
+ 1920 000a 04        		.byte	0x4
+ 1921 000b 00        		.byte	0
+ 1922 000c 0000      		.word	0
+ 1923 000e 0000      		.word	0
+ 1924 0010 0000 0000 		.long	.Ltext0
+ 1925 0014 0000 0400 		.long	.Letext0-.Ltext0
+ 1926 0018 0000 0000 		.long	.LFB8
+ 1927 001c 0000 0040 		.long	.LFE8-.LFB8
+ 1928 0020 0000 0000 		.long	0
+ 1929 0024 0000 0000 		.long	0
+ 1930               		.section	.debug_rnglists,"",@progbits
+ 1931               	.Ldebug_ranges0:
+ 1932 0000 0000 004E 		.long	.Ldebug_ranges3-.Ldebug_ranges2
+ 1933               	.Ldebug_ranges2:
+ 1934 0004 0005      		.word	0x5
+ 1935 0006 04        		.byte	0x4
+ 1936 0007 00        		.byte	0
+ 1937 0008 0000 0000 		.long	0
+ 1938               	.LLRL1:
+ 1939 000c 05        		.byte	0x5
+ 1940 000d 0000 0000 		.long	.LBB4
+ 1941 0011 04        		.byte	0x4
+ 1942 0012 00        		.uleb128 .LBB4-.LBB4
+ 1943 0013 3A        		.uleb128 .LBE4-.LBB4
+ 1944 0014 04        		.byte	0x4
+ 1945 0015 8C01      		.uleb128 .LBB7-.LBB4
+ 1946 0017 A601      		.uleb128 .LBE7-.LBB4
+ 1947 0019 00        		.byte	0
+ 1948               	.LLRL3:
+ 1949 001a 05        		.byte	0x5
+ 1950 001b 0000 0000 		.long	.LBB10
+ 1951 001f 04        		.byte	0x4
+ 1952 0020 00        		.uleb128 .LBB10-.LBB10
+ 1953 0021 3A        		.uleb128 .LBE10-.LBB10
+ 1954 0022 04        		.byte	0x4
+ 1955 0023 8C01      		.uleb128 .LBB13-.LBB10
+ 1956 0025 A601      		.uleb128 .LBE13-.LBB10
+ 1957 0027 00        		.byte	0
+ 1958               	.LLRL5:
+ 1959 0028 05        		.byte	0x5
+ 1960 0029 0000 0000 		.long	.LBB16
+ 1961 002d 04        		.byte	0x4
+ 1962 002e 00        		.uleb128 .LBB16-.LBB16
+ 1963 002f 3A        		.uleb128 .LBE16-.LBB16
+ 1964 0030 04        		.byte	0x4
+ 1965 0031 9001      		.uleb128 .LBB19-.LBB16
+ 1966 0033 AA01      		.uleb128 .LBE19-.LBB16
+ 1967 0035 00        		.byte	0
+ 1968               	.LLRL7:
+ 1969 0036 05        		.byte	0x5
+ 1970 0037 0000 0000 		.long	.LBB22
+ 1971 003b 04        		.byte	0x4
+ 1972 003c 00        		.uleb128 .LBB22-.LBB22
+ 1973 003d 3A        		.uleb128 .LBE22-.LBB22
+ 1974 003e 04        		.byte	0x4
+68K GAS  /tmp/ccMR7sQT.s 			page 41
+
+
+ 1975 003f 9001      		.uleb128 .LBB25-.LBB22
+ 1976 0041 AA01      		.uleb128 .LBE25-.LBB22
+ 1977 0043 00        		.byte	0
+ 1978               	.LLRL9:
+ 1979 0044 07        		.byte	0x7
+ 1980 0045 0000 0000 		.long	.Ltext0
+ 1981 0049 8008      		.uleb128 .Letext0-.Ltext0
+ 1982 004b 07        		.byte	0x7
+ 1983 004c 0000 0000 		.long	.LFB8
+ 1984 0050 40        		.uleb128 .LFE8-.LFB8
+ 1985 0051 00        		.byte	0
+ 1986               	.Ldebug_ranges3:
+ 1987               		.section	.debug_line,"",@progbits
+ 1988               	.Ldebug_line0:
+ 1989 0000 0000 026F 		.section	.debug_str,"MS",@progbits,1
+ 1989      0003 0000 
+ 1989      005E 0201 
+ 1989      FB0E 0D00 
+ 1989      0101 0101 
+ 1990               	.LASF8:
+ 1991 0000 6E65 7874 		.string	"next"
+ 1991      00
+ 1992               	.LASF39:
+ 1993 0005 2F68 6F6D 		.string	"/home/students/5233566329/software-exp/2_multitask-curnel_compiled"
+ 1993      652F 7374 
+ 1993      7564 656E 
+ 1993      7473 2F35 
+ 1993      3233 3335 
+ 1994               	.LASF0:
+ 1995 0048 636F 756E 		.string	"count"
+ 1995      7400 
+ 1996               	.LASF18:
+ 1997 004e 7368 6F72 		.string	"short unsigned int"
+ 1997      7420 756E 
+ 1997      7369 676E 
+ 1997      6564 2069 
+ 1997      6E74 00
+ 1998               	.LASF9:
+ 1999 0061 5443 425F 		.string	"TCB_TYPE"
+ 1999      5459 5045 
+ 1999      00
+ 2000               	.LASF34:
+ 2001 006a 5F5F 6275 		.string	"__builtin_putchar"
+ 2001      696C 7469 
+ 2001      6E5F 7075 
+ 2001      7463 6861 
+ 2001      7200 
+ 2002               	.LASF7:
+ 2003 007c 7374 6174 		.string	"status"
+ 2003      7573 00
+ 2004               	.LASF12:
+ 2005 0083 7365 6D61 		.string	"semaphore"
+ 2005      7068 6F72 
+ 2005      6500 
+ 2006               	.LASF36:
+ 2007 008d 5F5F 6275 		.string	"__builtin_puts"
+ 2007      696C 7469 
+68K GAS  /tmp/ccMR7sQT.s 			page 42
+
+
+ 2007      6E5F 7075 
+ 2007      7473 00
+ 2008               	.LASF40:
+ 2009 009c 7365 745F 		.string	"set_task"
+ 2009      7461 736B 
+ 2009      00
+ 2010               	.LASF16:
+ 2011 00a5 756E 7369 		.string	"unsigned char"
+ 2011      676E 6564 
+ 2011      2063 6861 
+ 2011      7200 
+ 2012               	.LASF3:
+ 2013 00b3 5345 4D41 		.string	"SEMAPHORE_TYPE"
+ 2013      5048 4F52 
+ 2013      455F 5459 
+ 2013      5045 00
+ 2014               	.LASF1:
+ 2015 00c2 7461 736B 		.string	"task_list"
+ 2015      5F6C 6973 
+ 2015      7400 
+ 2016               	.LASF14:
+ 2017 00cc 7265 6164 		.string	"ready"
+ 2017      7900 
+ 2018               	.LASF42:
+ 2019 00d2 7465 6D70 		.string	"temp"
+ 2019      00
+ 2020               	.LASF28:
+ 2021 00d7 7461 736B 		.string	"task3"
+ 2021      3300 
+ 2022               	.LASF38:
+ 2023 00dd 7465 7374 		.string	"test2.c"
+ 2023      322E 6300 
+ 2024               	.LASF4:
+ 2025 00e5 7461 736B 		.string	"task_addr"
+ 2025      5F61 6464 
+ 2025      7200 
+ 2026               	.LASF32:
+ 2027 00ef 7075 7463 		.string	"putchar"
+ 2027      6861 7200 
+ 2028               	.LASF6:
+ 2029 00f7 7072 696F 		.string	"priority"
+ 2029      7269 7479 
+ 2029      00
+ 2030               	.LASF10:
+ 2031 0100 6C6F 6E67 		.string	"long unsigned int"
+ 2031      2075 6E73 
+ 2031      6967 6E65 
+ 2031      6420 696E 
+ 2031      7400 
+ 2032               	.LASF5:
+ 2033 0112 7374 6163 		.string	"stack_ptr"
+ 2033      6B5F 7074 
+ 2033      7200 
+ 2034               	.LASF37:
+ 2035 011c 474E 5520 		.string	"GNU C17 11.4.0 -mcpu=68000 -msoft-float -g -O2 -fomit-frame-pointer"
+ 2035      4331 3720 
+ 2035      3131 2E34 
+68K GAS  /tmp/ccMR7sQT.s 			page 43
+
+
+ 2035      2E30 202D 
+ 2035      6D63 7075 
+ 2036               	.LASF41:
+ 2037 0160 6D61 696E 		.string	"main"
+ 2037      00
+ 2038               	.LASF23:
+ 2039 0165 756E 7369 		.string	"unsigned int"
+ 2039      676E 6564 
+ 2039      2069 6E74 
+ 2039      00
+ 2040               	.LASF21:
+ 2041 0172 6C6F 6E67 		.string	"long long unsigned int"
+ 2041      206C 6F6E 
+ 2041      6720 756E 
+ 2041      7369 676E 
+ 2041      6564 2069 
+ 2042               	.LASF2:
+ 2043 0189 5441 534B 		.string	"TASK_ID_TYPE"
+ 2043      5F49 445F 
+ 2043      5459 5045 
+ 2043      00
+ 2044               	.LASF25:
+ 2045 0196 696E 6974 		.string	"init_kernel"
+ 2045      5F6B 6572 
+ 2045      6E65 6C00 
+ 2046               	.LASF33:
+ 2047 01a2 5F5F 6275 		.string	"__builtin_printf"
+ 2047      696C 7469 
+ 2047      6E5F 7072 
+ 2047      696E 7466 
+ 2047      00
+ 2048               	.LASF22:
+ 2049 01b3 6C6F 6E67 		.string	"long double"
+ 2049      2064 6F75 
+ 2049      626C 6500 
+ 2050               	.LASF30:
+ 2051 01bf 7461 736B 		.string	"task1"
+ 2051      3100 
+ 2052               	.LASF29:
+ 2053 01c5 7461 736B 		.string	"task2"
+ 2053      3200 
+ 2054               	.LASF20:
+ 2055 01cb 6C6F 6E67 		.string	"long long int"
+ 2055      206C 6F6E 
+ 2055      6720 696E 
+ 2055      7400 
+ 2056               	.LASF27:
+ 2057 01d9 7461 736B 		.string	"task4"
+ 2057      3400 
+ 2058               	.LASF26:
+ 2059 01df 7072 696E 		.string	"printf"
+ 2059      7466 00
+ 2060               	.LASF17:
+ 2061 01e6 7368 6F72 		.string	"short int"
+ 2061      7420 696E 
+ 2061      7400 
+ 2062               	.LASF24:
+68K GAS  /tmp/ccMR7sQT.s 			page 44
+
+
+ 2063 01f0 6265 6769 		.string	"begin_sch"
+ 2063      6E5F 7363 
+ 2063      6800 
+ 2064               	.LASF31:
+ 2065 01fa 6469 7370 		.string	"display_ready_queue"
+ 2065      6C61 795F 
+ 2065      7265 6164 
+ 2065      795F 7175 
+ 2065      6575 6500 
+ 2066               	.LASF19:
+ 2067 020e 6C6F 6E67 		.string	"long int"
+ 2067      2069 6E74 
+ 2067      00
+ 2068               	.LASF11:
+ 2069 0217 6368 6172 		.string	"char"
+ 2069      00
+ 2070               	.LASF35:
+ 2071 021c 7075 7473 		.string	"puts"
+ 2071      00
+ 2072               	.LASF15:
+ 2073 0221 7369 676E 		.string	"signed char"
+ 2073      6564 2063 
+ 2073      6861 7200 
+ 2074               	.LASF13:
+ 2075 022d 7461 736B 		.string	"task_tab"
+ 2075      5F74 6162 
+ 2075      00
+ 2076               		.ident	"GCC: (GNU) 11.4.0"
+68K GAS  /tmp/ccMR7sQT.s 			page 45
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 test2.c
+     /tmp/ccMR7sQT.s:15     .text:0000000000000000 display_ready_queue
+     /tmp/ccMR7sQT.s:93     .text:0000000000000054 task1
+     /tmp/ccMR7sQT.s:263    .text:000000000000013c task2
+     /tmp/ccMR7sQT.s:433    .text:0000000000000224 task3
+     /tmp/ccMR7sQT.s:604    .text:0000000000000312 task4
+     /tmp/ccMR7sQT.s:772    .text.startup:0000000000000000 main
+
+UNDEFINED SYMBOLS
+ready
+printf
+task_tab
+putchar
+P
+puts
+semaphore
+V
+init_kernel
+set_task
+begin_sch
